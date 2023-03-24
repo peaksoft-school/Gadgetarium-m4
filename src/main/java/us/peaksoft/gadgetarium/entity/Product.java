@@ -1,13 +1,11 @@
 package us.peaksoft.gadgetarium.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -45,6 +43,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @Transient
+    private Long categoryId;
 
     @ManyToOne
     @JoinColumn(name = "basket_id")
