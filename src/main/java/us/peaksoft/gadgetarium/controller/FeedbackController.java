@@ -1,9 +1,8 @@
 package us.peaksoft.gadgetarium.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
 import us.peaksoft.gadgetarium.service.FeedbackService;
 
@@ -18,5 +17,10 @@ public class FeedbackController {
     @GetMapping
     public List<FeedbackResponce> getAllFeedbacks() {
         return feedbackService.getAllFeedbacks();
+    }
+
+    @PostMapping
+    public FeedbackResponce save(@RequestBody FeedbackRequest feedbackRequest) {
+        return feedbackService.save(feedbackRequest);
     }
 }
