@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
 import us.peaksoft.gadgetarium.entity.Feedback;
-import us.peaksoft.gadgetarium.entity.Product;
 import us.peaksoft.gadgetarium.entity.User;
 import us.peaksoft.gadgetarium.repository.FeedbackRepository;
 import us.peaksoft.gadgetarium.service.FeedbackService;
@@ -30,7 +29,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackResponce save(FeedbackRequest feedbackRequest) {
-        return null;
+        Feedback feedback1 = mapToEntity(feedbackRequest);
+        feedbackRepository.save(feedback1);
+        return mapToResponse(feedback1);
     }
 
     @Override
@@ -47,7 +48,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     public void delete(Long id) {
 
     }
-    public FeedbackResponce mapToResponse(Feedback feedback){
+
+    public FeedbackResponce mapToResponse(Feedback feedback) {
         FeedbackResponce feedbackResponce = new FeedbackResponce();
         feedbackResponce.setId(feedback.getId());
         feedbackResponce.setFeedback(feedback.getFeedback());
@@ -57,5 +59,16 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedbackResponce.setProduct(feedback.getProduct().getName());
         feedbackResponce.setUser(feedback.getUser().getLastName());
         return feedbackResponce;
+    }
+
+    private Feedback mapToEntity(FeedbackRequest feedbackRequest) {
+        Feedback feedback = new Feedback();
+        feedback.setFeedback(feedbackRequest.getFeedback());
+        feedback.setMedia(feedbackRequest.getMedia());
+        feedback.setProductEvaluation(feedbackRequest.getProductEvaluation());
+        feedback.setProduct(feedbackRequest.getProduct());
+        User user = new User();
+        feedback.setUser();
+        return feedback;
     }
 }
