@@ -96,4 +96,6 @@ public class User implements UserDetails {
         return true;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Feedback> feedbacks;
 }
