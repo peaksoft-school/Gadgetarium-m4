@@ -49,7 +49,7 @@ public class Product {
     @Column(name = "capacity_battery")
     private String capacityBattery;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<Category> category;
 
     @ManyToOne
@@ -77,4 +77,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "discount_id")
     private Discount discount;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Feedback> feedbacks;
 }

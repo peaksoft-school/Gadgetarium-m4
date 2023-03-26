@@ -55,6 +55,10 @@ public class User {
     @OneToOne
     @JoinColumn(name = "payments_id")
     private Payments payments;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<Order>orders;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Order> orders;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Feedback> feedbacks;
 }
