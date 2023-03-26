@@ -12,8 +12,8 @@ import us.peaksoft.gadgetarium.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeedbackRequest {
-    private Product product;
-    private User user;
+    private Long product;
+    private Long user;
     private String feedback;
     private String media;
     private byte productEvaluation;

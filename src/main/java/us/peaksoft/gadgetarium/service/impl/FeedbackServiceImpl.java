@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
 import us.peaksoft.gadgetarium.entity.Feedback;
+import us.peaksoft.gadgetarium.entity.Product;
 import us.peaksoft.gadgetarium.entity.User;
 import us.peaksoft.gadgetarium.repository.FeedbackRepository;
+import us.peaksoft.gadgetarium.repository.ProductRepository;
+import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.service.FeedbackService;
 
 import java.util.ArrayList;
@@ -16,6 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FeedbackServiceImpl implements FeedbackService {
     private final FeedbackRepository feedbackRepository;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public List<FeedbackResponce> getAllFeedbacks() {
@@ -66,9 +71,8 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setFeedback(feedbackRequest.getFeedback());
         feedback.setMedia(feedbackRequest.getMedia());
         feedback.setProductEvaluation(feedbackRequest.getProductEvaluation());
-        feedback.setProduct(feedbackRequest.getProduct());
-        User user = new User();
-        feedback.setUser();
+        feedback.setProduct(productRepository.getById(feedbackRequest.getProduct()));
+        feedback.setUser(userRepository.getById(feedbackRequest.getUser()));
         return feedback;
     }
 }
