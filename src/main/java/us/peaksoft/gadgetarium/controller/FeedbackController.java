@@ -23,4 +23,25 @@ public class FeedbackController {
     public FeedbackResponce save(@RequestBody FeedbackRequest feedbackRequest) {
         return feedbackService.save(feedbackRequest);
     }
+
+    @GetMapping("{id}")
+    public FeedbackResponce getById(@PathVariable("id") Long id) {
+        return feedbackService.getById(id);
+    }
+
+    @PutMapping("{id}")
+    public FeedbackResponce update(@PathVariable("id") Long id, @RequestBody FeedbackRequest feedbackRequest) {
+        return feedbackService.update(id, feedbackRequest);
+    }
+
+    @DeleteMapping("{id}")
+    public String delete(@PathVariable("id") Long id) {
+        feedbackService.delete(id);
+        return "Feedback with this id : " + id + " was deleted";
+    }
+
+    @PutMapping("/admin/{id}")
+    public FeedbackResponce reply(@PathVariable("id") Long id, @RequestBody FeedbackRequest feedbackRequest) {
+        return feedbackService.reply(id, feedbackRequest);
+    }
 }

@@ -12,7 +12,9 @@ import us.peaksoft.gadgetarium.repository.ProductRepository;
 import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.service.FeedbackService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,17 +43,33 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackResponce update(Long id, FeedbackRequest feedbackRequest) {
-        return null;
+        Feedback feedback1 = feedbackRepository.findById(id).get();
+        feedback1.setFeedback(feedbackRequest.getFeedback());
+        feedback1.setMedia(feedbackRequest.getMedia());
+        feedback1.setCreatedDate(new Date());
+        feedback1.setProductEvaluation(feedbackRequest.getProductEvaluation());
+        feedbackRepository.save(feedback1);
+        return mapToResponse(feedback1);
     }
 
     @Override
     public FeedbackResponce getById(Long id) {
-        return null;
+        Feedback feedback = feedbackRepository.findById(id).get();
+        return mapToResponse(feedback);
     }
 
     @Override
     public void delete(Long id) {
+        Feedback feedback = feedbackRepository.findById(id).get();
+        feedbackRepository.delete(feedback);
+    }
 
+    @Override
+    public FeedbackResponce reply(Long id, FeedbackRequest feedbackRequest) {
+        Feedback feedback2 = feedbackRepository.findById(id).get();
+        feedback2.setAdminReplay(feedbackRequest.getAdminReplay());
+        feedbackRepository.save(feedback2);
+        return mapToResponse(feedback2);
     }
 
     public FeedbackResponce mapToResponse(Feedback feedback) {
@@ -63,6 +81,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedbackResponce.setAdminReplay(feedback.getAdminReplay());
         feedbackResponce.setProduct(feedback.getProduct().getName());
         feedbackResponce.setUser(feedback.getUser().getLastName());
+        feedbackResponce.setCreatedDate(feedback.getCreatedDate());
         return feedbackResponce;
     }
 
@@ -73,6 +92,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setProductEvaluation(feedbackRequest.getProductEvaluation());
         feedback.setProduct(productRepository.getById(feedbackRequest.getProduct()));
         feedback.setUser(userRepository.getById(feedbackRequest.getUser()));
+        feedback.setCreatedDate(new Date());
         return feedback;
     }
 }

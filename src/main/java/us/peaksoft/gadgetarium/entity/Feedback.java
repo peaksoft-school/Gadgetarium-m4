@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,5 +29,6 @@ public class Feedback {
     private String adminReplay;
     private String media;
     private byte productEvaluation;
+    private Date createdDate;
 
 }

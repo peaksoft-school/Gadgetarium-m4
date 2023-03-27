@@ -17,5 +17,6 @@ public class FeedbackRequest {
     private String feedback;
     private String media;
     private byte productEvaluation;
+    private String adminReplay;
 
 }
