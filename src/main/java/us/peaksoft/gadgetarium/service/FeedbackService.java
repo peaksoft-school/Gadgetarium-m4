@@ -15,4 +15,6 @@ public interface FeedbackService {
     FeedbackResponce getById(Long id);
 
     void delete(Long id);
+
+    FeedbackResponce reply(Long id, FeedbackRequest feedbackRequest);
 }

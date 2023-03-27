@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import us.peaksoft.gadgetarium.entity.Product;
-import us.peaksoft.gadgetarium.entity.User;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,4 +19,5 @@ public class FeedbackResponce {
     private String adminReplay;
     private String media;
     private byte productEvaluation;
+    private Date createdDate;
 }
