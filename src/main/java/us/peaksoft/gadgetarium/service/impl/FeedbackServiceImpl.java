@@ -5,14 +5,11 @@ import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
 import us.peaksoft.gadgetarium.entity.Feedback;
-import us.peaksoft.gadgetarium.entity.Product;
-import us.peaksoft.gadgetarium.entity.User;
 import us.peaksoft.gadgetarium.repository.FeedbackRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
 import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.service.FeedbackService;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +77,8 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedbackResponce.setMedia(feedback.getMedia());
         feedbackResponce.setAdminReplay(feedback.getAdminReplay());
         feedbackResponce.setProduct(feedback.getProduct().getName());
-        feedbackResponce.setUser(feedback.getUser().getLastName());
+        feedbackResponce.setFirstName(feedback.getUser().getFirstName());
+        feedbackResponce.setLastName(feedback.getUser().getLastName());
         feedbackResponce.setCreatedDate(feedback.getCreatedDate());
         return feedbackResponce;
     }

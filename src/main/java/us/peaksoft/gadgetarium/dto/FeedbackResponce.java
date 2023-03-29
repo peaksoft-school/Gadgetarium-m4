@@ -15,6 +15,8 @@ public class FeedbackResponce {
     private Long id;
     private String product;
     private String user;
+    private String firstName;
+    private String lastName;
     private String feedback;
     private String adminReplay;
     private String media;

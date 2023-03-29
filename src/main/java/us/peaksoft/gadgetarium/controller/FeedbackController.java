@@ -20,8 +20,9 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public FeedbackResponce save(@RequestBody FeedbackRequest feedbackRequest) {
-        return feedbackService.save(feedbackRequest);
+    public String save(@RequestBody FeedbackRequest feedbackRequest) {
+        feedbackService.save(feedbackRequest);
+        return "Ваш отзыв был успешно отправлен!";
     }
 
     @GetMapping("{id}")
@@ -37,7 +38,7 @@ public class FeedbackController {
     @DeleteMapping("{id}")
     public String delete(@PathVariable("id") Long id) {
         feedbackService.delete(id);
-        return "Feedback with this id : " + id + " was deleted";
+        return "Ваш отзыв был удален";
     }
 
     @PutMapping("/admin/{id}")
