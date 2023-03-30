@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
+import us.peaksoft.gadgetarium.dto.RatingResponce;
 import us.peaksoft.gadgetarium.entity.Feedback;
 import us.peaksoft.gadgetarium.repository.FeedbackRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
@@ -92,5 +93,17 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setUser(userRepository.getById(feedbackRequest.getUser()));
         feedback.setCreatedDate(new Date());
         return feedback;
+    }
+
+    public RatingResponce rating() {
+        RatingResponce ratingResponce = new RatingResponce();
+        ratingResponce.setOne(feedbackRepository.countFeedbackByProductEvaluation((byte) 1));
+        ratingResponce.setTwo(feedbackRepository.countFeedbackByProductEvaluation((byte) 2));
+        ratingResponce.setThree(feedbackRepository.countFeedbackByProductEvaluation((byte) 3));
+        ratingResponce.setFour(feedbackRepository.countFeedbackByProductEvaluation((byte) 4));
+        ratingResponce.setFive(feedbackRepository.countFeedbackByProductEvaluation((byte) 5));
+        ratingResponce.setRating(feedbackRepository.rating());
+        ratingResponce.setAllFeedback(feedbackRepository.allfeedback());
+        return ratingResponce;
     }
 }

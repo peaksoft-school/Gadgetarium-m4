@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
+import us.peaksoft.gadgetarium.dto.RatingResponce;
 import us.peaksoft.gadgetarium.service.FeedbackService;
 
 import java.util.List;
@@ -44,5 +45,10 @@ public class FeedbackController {
     @PutMapping("/admin/{id}")
     public FeedbackResponce reply(@PathVariable("id") Long id, @RequestBody FeedbackRequest feedbackRequest) {
         return feedbackService.reply(id, feedbackRequest);
+    }
+
+    @GetMapping("/rating")
+    public RatingResponce rating() {
+        return feedbackService.rating();
     }
 }
