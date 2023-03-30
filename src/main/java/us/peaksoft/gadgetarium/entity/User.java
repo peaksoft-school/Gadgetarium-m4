@@ -57,9 +57,6 @@ public class User {
     private Payments payments;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Order> orders;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Feedback> feedbacks;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
