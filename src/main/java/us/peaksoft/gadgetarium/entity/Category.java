@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import us.peaksoft.gadgetarium.enums.Subcat;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,7 +25,6 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private Subcat subcat;
 
-    @ManyToOne
-    private Product product;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private List<Product> products;
 }

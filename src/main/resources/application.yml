@@ -1,0 +1,14 @@
+spring:
+    datasource:
+        password: postgres
+        url: jdbc:postgresql://localhost:5432/gadgetarium
+        username: postgres
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+        defer-datasource-initialization: true
+        hibernate:
+            ddl-auto: create-drop
+    sql:
+        init:
+            data-locations: classpath:db/data.sql
+            mode: always

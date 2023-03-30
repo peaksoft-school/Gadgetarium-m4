@@ -1,10 +1,7 @@
 package us.peaksoft.gadgetarium.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
@@ -13,6 +10,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Getter
 @Setter
 @Entity
@@ -23,7 +21,7 @@ public class Product {
     private Long id;
 
     private String name;
-    private String price;
+    private int price;
 
     @Enumerated(EnumType.STRING)
     private Brand brand;
@@ -39,18 +37,25 @@ public class Product {
     private String ram;
     private String rom;
     private String sim;
+    private Long quantityOfSim;
     private String cpu;
     private String weight;
     private String guarantee;
     private String image;
     private String displayInch;
     private String appointment;
+    private String PDF;
+    private String description;
 
     @Column(name = "capacity_battery")
     private String capacityBattery;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<Category> category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @Transient
+    Long categoryId;
 
     @ManyToOne
     @JoinColumn(name = "basket_id")
@@ -74,7 +79,7 @@ public class Product {
     @JoinColumn(name = "chosen_id")
     private Chosen chosen;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "discount_id")
     private Discount discount;
 

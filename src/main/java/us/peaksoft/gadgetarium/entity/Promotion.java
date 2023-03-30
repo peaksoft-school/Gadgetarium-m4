@@ -11,7 +11,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "promotions")
 public class Promotion {
@@ -19,12 +20,12 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   @Column(name = "date_of_start")
+    @Column(name = "date_of_start")
     private LocalDate dateOfStart;
 
     @Column(name = "date_of_finish")
     private LocalDate dateOfFinish;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "promotion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
     private List<Product> product;
 }

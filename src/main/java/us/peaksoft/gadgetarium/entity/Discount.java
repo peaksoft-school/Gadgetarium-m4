@@ -23,11 +23,11 @@ public class Discount {
     @Column(name = "date_of_start")
     private LocalDate dateOfStart;
 
-     @Column(name = "date_of_finish")
+    @Column(name = "date_of_finish")
     private LocalDate dateOfFinish;
 
     private int percent;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "discount")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "discount")
     private List<Product> products;
 }

@@ -30,6 +30,6 @@ public class Payments {
     @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "payments")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "payments")
     private User user;
 }

@@ -20,12 +20,12 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-     @Column(name = "date_of_start")
+    @Column(name = "date_of_start")
     private LocalDate dateOfStart;
 
-     @Column(name = "date_of_finish")
+    @Column(name = "date_of_finish")
     private LocalDate dateOfFinish;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "news")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "news")
     private List<Product> products;
 }

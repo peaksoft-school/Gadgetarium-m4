@@ -19,9 +19,9 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "basket")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "basket")
     private List<Product> products;
 
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "basket")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "basket")
     private User user;
 }
