@@ -82,4 +82,7 @@ public class Product {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "discount_id")
     private Discount discount;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Feedback> feedbacks;
 }
