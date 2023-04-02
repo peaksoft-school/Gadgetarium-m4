@@ -3,6 +3,7 @@ package us.peaksoft.gadgetarium.service;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
 import us.peaksoft.gadgetarium.dto.RatingResponce;
+import us.peaksoft.gadgetarium.dto.SimpleResponse;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface FeedbackService {
 
     FeedbackResponce getById(Long id);
 
-    void delete(Long id);
+    SimpleResponse delete(Long id);
 
     FeedbackResponce reply(Long id, FeedbackRequest feedbackRequest);
 

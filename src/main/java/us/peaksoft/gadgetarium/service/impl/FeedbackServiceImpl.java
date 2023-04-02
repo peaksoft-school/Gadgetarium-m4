@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
 import us.peaksoft.gadgetarium.dto.RatingResponce;
+import us.peaksoft.gadgetarium.dto.SimpleResponse;
 import us.peaksoft.gadgetarium.entity.Feedback;
 import us.peaksoft.gadgetarium.repository.FeedbackRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
@@ -57,9 +58,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public void delete(Long id) {
+    public SimpleResponse delete(Long id) {
         Feedback feedback = feedbackRepository.findById(id).get();
         feedbackRepository.delete(feedback);
+        return null;
     }
 
     @Override

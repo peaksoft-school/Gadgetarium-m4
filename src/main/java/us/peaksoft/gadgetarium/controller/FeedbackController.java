@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.*;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
 import us.peaksoft.gadgetarium.dto.RatingResponce;
+import us.peaksoft.gadgetarium.dto.SimpleResponse;
 import us.peaksoft.gadgetarium.service.FeedbackService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/public/feedback")
+@RequestMapping("api/feedback")
 @RequiredArgsConstructor
 public class FeedbackController {
     private final FeedbackService feedbackService;
@@ -37,9 +38,8 @@ public class FeedbackController {
     }
 
     @DeleteMapping("{id}")
-    public String delete(@PathVariable("id") Long id) {
-        feedbackService.delete(id);
-        return "Ваш отзыв был удален";
+    public SimpleResponse delete(@PathVariable("id") Long id) {
+        return feedbackService.delete(id);
     }
 
     @PutMapping("/admin/{id}")
