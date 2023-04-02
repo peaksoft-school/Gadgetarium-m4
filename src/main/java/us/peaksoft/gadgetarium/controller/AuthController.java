@@ -10,13 +10,13 @@ import us.peaksoft.gadgetarium.dto.RegisterRequest;
 import us.peaksoft.gadgetarium.service.AuthService;
 
 @RestController
-@RequestMapping("api/gadgetarium/auth")
+@RequestMapping("api/public")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public AuthenticationResponse register(@RequestBody RegisterRequest request){
         return  authService.register(request);
     }
