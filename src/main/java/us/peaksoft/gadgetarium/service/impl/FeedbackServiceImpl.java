@@ -1,6 +1,7 @@
 package us.peaksoft.gadgetarium.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.FeedbackRequest;
 import us.peaksoft.gadgetarium.dto.FeedbackResponce;
@@ -15,6 +16,7 @@ import us.peaksoft.gadgetarium.service.FeedbackService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -59,9 +61,21 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public SimpleResponse delete(Long id) {
-        Feedback feedback = feedbackRepository.findById(id).get();
-        feedbackRepository.delete(feedback);
-        return null;
+        SimpleResponse simpleResponse = new SimpleResponse();
+        Feedback feedback = new Feedback();
+        Boolean exists = feedbackRepository.existsById(id);
+        if (exists) {
+            feedback = feedbackRepository.findById(id).get();
+        }
+        if (Objects.equals(feedback.getId(), id)) {
+            feedbackRepository.delete(feedback);
+            simpleResponse.setHttpStatus(HttpStatus.OK);
+            simpleResponse.setMessage("Ваш отзыв успешно удален");
+        } else {
+            simpleResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+            simpleResponse.setMessage("Такого отзыва нет");
+        }
+        return simpleResponse;
     }
 
     @Override
