@@ -1,0 +1,25 @@
+spring:
+    datasource:
+        password: postgres
+        url: jdbc:postgresql://localhost:5432/gadgetarium
+        username: postgres
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+        defer-datasource-initialization: true
+        hibernate:
+            ddl-auto: create
+    sql:
+        init:
+            data-locations: classpath:db/data.sql
+            mode: always
+application:
+        bucket:
+            name:  gadgetarium-m4
+cloud:
+    aws:
+        credentials:
+           access-key: ${cloud.aws.credentials.access-key}
+           secret-key: ${cloud.aws.credentials.secret-key}
+
+        region:
+              static: eu-central-1
