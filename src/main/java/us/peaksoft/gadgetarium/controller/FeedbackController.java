@@ -22,9 +22,8 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public String save(@RequestBody FeedbackRequest feedbackRequest) {
-        feedbackService.save(feedbackRequest);
-        return "Ваш отзыв был успешно отправлен!";
+    public SimpleResponse save(@RequestBody FeedbackRequest feedbackRequest) {
+        return feedbackService.save(feedbackRequest);
     }
 
     @GetMapping("{id}")

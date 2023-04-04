@@ -36,10 +36,14 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public FeedbackResponce save(FeedbackRequest feedbackRequest) {
+    public SimpleResponse save(FeedbackRequest feedbackRequest) {
         Feedback feedback1 = mapToEntity(feedbackRequest);
         feedbackRepository.save(feedback1);
-        return mapToResponse(feedback1);
+        mapToResponse(feedback1);
+        SimpleResponse simpleResponse = new SimpleResponse();
+        simpleResponse.setHttpStatus(HttpStatus.OK);
+        simpleResponse.setMessage("Ваш отзыв успешно отправлен");
+        return simpleResponse;
     }
 
     @Override
@@ -51,6 +55,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback1.setProductEvaluation(feedbackRequest.getProductEvaluation());
         feedbackRepository.save(feedback1);
         return mapToResponse(feedback1);
+
     }
 
     @Override
@@ -63,7 +68,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public SimpleResponse delete(Long id) {
         SimpleResponse simpleResponse = new SimpleResponse();
         Feedback feedback = new Feedback();
-        Boolean exists = feedbackRepository.existsById(id);
+        boolean exists = feedbackRepository.existsById(id);
         if (exists) {
             feedback = feedbackRepository.findById(id).get();
         }
