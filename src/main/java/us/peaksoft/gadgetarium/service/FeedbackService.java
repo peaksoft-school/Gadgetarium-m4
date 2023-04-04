@@ -10,7 +10,7 @@ import java.util.List;
 public interface FeedbackService {
     List<FeedbackResponce> getAllFeedbacks();
 
-    FeedbackResponce save(FeedbackRequest feedbackRequest);
+    SimpleResponse save(FeedbackRequest feedbackRequest);
 
     FeedbackResponce update(Long id, FeedbackRequest feedbackRequest);
 
