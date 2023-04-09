@@ -39,7 +39,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     public SimpleResponse save(FeedbackRequest feedbackRequest) {
         Feedback feedback1 = mapToEntity(feedbackRequest);
         feedbackRepository.save(feedback1);
-        mapToResponse(feedback1);
         SimpleResponse simpleResponse = new SimpleResponse();
         simpleResponse.setHttpStatus(HttpStatus.OK);
         simpleResponse.setMessage("Ваш отзыв успешно отправлен");
