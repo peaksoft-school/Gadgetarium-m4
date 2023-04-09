@@ -1,5 +1,6 @@
 package us.peaksoft.gadgetarium.service;
 
+import us.peaksoft.gadgetarium.dto.ProductDetailsResponse;
 import us.peaksoft.gadgetarium.dto.SimpleResponse;
 import us.peaksoft.gadgetarium.dto.ProductRequest;
 import us.peaksoft.gadgetarium.dto.ProductResponse;
@@ -21,4 +22,5 @@ public interface ProductService {
     ProductResponse getById(Long id);
 
     SimpleResponse delete(Long id);
+    List <ProductDetailsResponse> productDetails();
 }

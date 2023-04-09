@@ -1,6 +1,7 @@
 package us.peaksoft.gadgetarium.entity;
 
 import jakarta.persistence.*;
+import jdk.jfr.SettingDefinition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,4 +31,6 @@ public class Discount {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "discount")
     private List<Product> products;
+
+
 }

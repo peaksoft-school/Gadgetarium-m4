@@ -13,12 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class S3StorageController {
     private final S3Service service;
 
-    @PostMapping("/upload")
+    @PostMapping("upload")
     public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file) {
         return new ResponseEntity<>(service.uploadFile(file), HttpStatus.OK);
     }
 
-    @GetMapping("/download/{fileName}")
+    @GetMapping("download/{fileName}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName) {
         byte[] data = service.downloadFile(fileName);
         ByteArrayResource resource = new ByteArrayResource(data);
@@ -30,7 +30,7 @@ public class S3StorageController {
                 .body(resource);
     }
 
-    @DeleteMapping("/delete/{fileName}")
+    @DeleteMapping("delete/{fileName}")
     public ResponseEntity<String> deleteFile(@PathVariable String fileName) {
         return new ResponseEntity<>(service.deleteFile(fileName), HttpStatus.OK);
     }
