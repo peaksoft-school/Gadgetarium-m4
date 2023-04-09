@@ -33,4 +33,5 @@ public class ProductRequest {
     private String PDF;
     private String description;
     private Long categoryId;
+    private Long discountId;
 }
