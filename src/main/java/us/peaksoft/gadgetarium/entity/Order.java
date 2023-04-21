@@ -24,7 +24,7 @@ public class Order {
     private Short countOfProducts;
 
     @Column(name = "total_sum")
-    private Float totalSum;
+    private int totalSum;
 
     private String shipping;
 
@@ -34,9 +34,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private List<Product> products;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

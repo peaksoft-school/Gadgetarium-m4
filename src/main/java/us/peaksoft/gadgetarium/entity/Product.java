@@ -97,8 +97,9 @@ public class Product {
     @JoinColumn(name = "discount_id")
     private Discount discount;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<Order> orders;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @Transient
     private Long discountId;
