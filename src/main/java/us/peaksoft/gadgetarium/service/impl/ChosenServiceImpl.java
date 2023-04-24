@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ChosenServiceImpl implements ChosenService {
+
     private final ProductRepository productRepository;
     private final ChosenRepository chosenRepository;
 
@@ -78,19 +79,13 @@ public class ChosenServiceImpl implements ChosenService {
         return simpleResponse;
     }
 
-    public ChosenResponse mapToResponse(Chosen chosen) {
+    private ChosenResponse mapToResponse(Chosen chosen) {
         ChosenResponse chosenResponse = new ChosenResponse();
         chosenResponse.setId(chosen.getId());
         return chosenResponse;
     }
 
-    public Chosen mapToRequest(ChosenRequest chosenRequest) {
-        Chosen chosen = new Chosen();
-        chosen.setId(chosenRequest.getId());
-        return chosen;
-    }
-
-    public ProductResponse mapToResponseForProduct(Product product) {
+    private ProductResponse mapToResponseForProduct(Product product) {
         ProductResponse productResponse = new ProductResponse();
         productResponse.setId(product.getId());
         productResponse.setName(product.getName());
