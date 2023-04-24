@@ -31,4 +31,6 @@ public class RegisterRequest {
 
     private Long chosenId;
 
+    private Long chosenId;
+
 }
