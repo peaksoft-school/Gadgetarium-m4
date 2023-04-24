@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "chosen")
 public class Chosen {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +23,7 @@ public class Chosen {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chosen")
     private List<Product> products;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "chosen")
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
+
 }

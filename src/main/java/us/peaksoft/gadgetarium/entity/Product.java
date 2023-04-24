@@ -93,6 +93,9 @@ public class Product {
     @JoinColumn(name = "chosen_id")
     private Chosen chosen;
 
+    @Transient
+    private Long chosenId;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "discount_id")
     private Discount discount;

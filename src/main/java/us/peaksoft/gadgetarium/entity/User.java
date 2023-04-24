@@ -51,12 +51,16 @@ public class User implements UserDetails {
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
     @Transient
     private Long basketId;
 
     @OneToOne
     @JoinColumn(name = "chosen_id")
     private Chosen chosen;
+
+    @Transient
+    private Long chosenId;
 
     @OneToOne
     @JoinColumn(name = "order_list_id")

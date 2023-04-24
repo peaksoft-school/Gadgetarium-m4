@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/products/**").permitAll()
                 .requestMatchers("/api/products/contacts").permitAll()
                 .requestMatchers("/api/discounts/**").permitAll()
+                .requestMatchers("/api/wishlist/**").permitAll()
                 .requestMatchers("/api/feedbacks/**").permitAll()
                 .requestMatchers("/api/cart/**").permitAll()
                 .anyRequest()
