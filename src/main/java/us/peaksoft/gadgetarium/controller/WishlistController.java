@@ -20,13 +20,13 @@ public class WishlistController {
     private final ChosenService chosenService;
 
     @GetMapping("/{id}")
-    @Operation(description = "Only users can add a Product to Wishlist")
+    @Operation(description = "Only users can  get Wishlist by id")
     public ChosenResponse getById(@PathVariable("id") Long id) {
         return chosenService.getById(id);
     }
 
     @PostMapping("products/{id}")
-    @Operation(description = "Users and Admin can delete a Product from Wishlist")
+    @Operation(description = "Users and Admin can add a Product from Wishlist")
     public ProductResponse saveProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
         return chosenService.saveProductInChosen(id, productRequest);
     }
@@ -44,10 +44,10 @@ public class WishlistController {
         return chosenService.getProductsByChosenId(id, page, size);
     }
 
-    @PutMapping("products/{id}")
+    @PutMapping("products/{wishlistId}")
     @Operation(description = "Users and Admin can delete a List of Products from Wishlist")
-    public SimpleResponse deleteAllProducts(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
-        return chosenService.deleteAllProducts(id, productRequest);
+    public SimpleResponse deleteAllProducts(@PathVariable("wishlistId") Long wishlistId, @RequestBody ProductRequest productRequest) {
+        return chosenService.deleteAllProducts(wishlistId, productRequest);
     }
 
 }
