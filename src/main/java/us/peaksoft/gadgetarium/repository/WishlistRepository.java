@@ -11,10 +11,10 @@ import us.peaksoft.gadgetarium.entity.Product;
 
 import java.util.List;
 
-
 @Repository
 @Transactional
-public interface ChosenRepository extends JpaRepository<Chosen, Long> {
+public interface WishlistRepository extends JpaRepository<Chosen, Long> {
+
     @Query("SELECT pro FROM Product pro JOIN pro.chosen cho WHERE cho.id =:id")
     List<Product> getProductsByChosenId(@PathVariable("id") Long id, Pageable pageable);
 

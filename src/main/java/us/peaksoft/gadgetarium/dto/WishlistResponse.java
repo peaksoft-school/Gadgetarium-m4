@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChosenRequest {
+public class WishlistResponse {
     private Long id;
 
 }

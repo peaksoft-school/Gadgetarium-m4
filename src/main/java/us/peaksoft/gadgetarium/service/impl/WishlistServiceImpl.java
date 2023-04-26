@@ -8,25 +8,25 @@ import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.*;
 import us.peaksoft.gadgetarium.entity.Chosen;
 import us.peaksoft.gadgetarium.entity.Product;
-import us.peaksoft.gadgetarium.repository.ChosenRepository;
+import us.peaksoft.gadgetarium.repository.WishlistRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
-import us.peaksoft.gadgetarium.service.ChosenService;
+import us.peaksoft.gadgetarium.service.WishlistService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ChosenServiceImpl implements ChosenService {
+public class WishlistServiceImpl implements WishlistService {
 
     private final ProductRepository productRepository;
-    private final ChosenRepository chosenRepository;
+    private final WishlistRepository wishlistRepository;
 
     @Override
     public ProductResponse saveProductInChosen(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id).get();
         if (productRequest.getChosenId() != null) {
-            Chosen chosen = chosenRepository.findById(productRequest.getChosenId()).get();
+            Chosen chosen = wishlistRepository.findById(productRequest.getChosenId()).get();
             product.setChosen(chosen);
         }
         productRepository.save(product);
@@ -34,8 +34,8 @@ public class ChosenServiceImpl implements ChosenService {
     }
 
     @Override
-    public ChosenResponse getById(Long id) {
-        Chosen chosen = chosenRepository.findById(id).get();
+    public WishlistResponse getById(Long id) {
+        Chosen chosen = wishlistRepository.findById(id).get();
         return mapToResponse(chosen);
     }
 
@@ -55,7 +55,7 @@ public class ChosenServiceImpl implements ChosenService {
     @Override
     public List<ProductResponse> getProductsByChosenId(Long id, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        List<Product> products = chosenRepository.getProductsByChosenId(id, pageable);
+        List<Product> products = wishlistRepository.getProductsByChosenId(id, pageable);
         List<ProductResponse> productResponses = new ArrayList<>();
         for (Product product : products) {
             productResponses.add(mapToResponseForProduct(product));
@@ -65,7 +65,7 @@ public class ChosenServiceImpl implements ChosenService {
 
     @Override
     public SimpleResponse deleteAllProducts(Long id, ProductRequest productRequest) {
-        Chosen chosen = chosenRepository.findById(id).get();
+        Chosen chosen = wishlistRepository.findById(id).get();
         List<Product> products = chosen.getProducts();
         SimpleResponse simpleResponse = new SimpleResponse();
         for (Product product : products) {
@@ -79,10 +79,10 @@ public class ChosenServiceImpl implements ChosenService {
         return simpleResponse;
     }
 
-    private ChosenResponse mapToResponse(Chosen chosen) {
-        ChosenResponse chosenResponse = new ChosenResponse();
-        chosenResponse.setId(chosen.getId());
-        return chosenResponse;
+    private WishlistResponse mapToResponse(Chosen chosen) {
+        WishlistResponse wishlistResponse = new WishlistResponse();
+        wishlistResponse.setId(chosen.getId());
+        return wishlistResponse;
     }
 
     private ProductResponse mapToResponseForProduct(Product product) {
