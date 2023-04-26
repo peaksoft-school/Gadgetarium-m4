@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("api/wishlist")
 @Tag(name = "BasketController", description = "API endpoints for managing Wishlist")
 @RequiredArgsConstructor
-public class ChosenController {
+public class WishlistController {
     private final ChosenService chosenService;
 
     @GetMapping("/{id}")
