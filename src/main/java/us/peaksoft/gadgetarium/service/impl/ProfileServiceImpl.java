@@ -1,40 +1,34 @@
 package us.peaksoft.gadgetarium.service.impl;
-
-import com.amazonaws.services.acmpca.model.ResourceNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import springfox.documentation.swagger2.mappers.ModelMapper;
-import us.peaksoft.gadgetarium.dto.ProfileDto;
-import us.peaksoft.gadgetarium.entity.Profile;
-import us.peaksoft.gadgetarium.repository.ProfileRepository;
+import us.peaksoft.gadgetarium.entity.User;
+import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.service.ProfileService;
+import us.peaksoft.gadgetarium.dto.ProfileResponse;
+import us.peaksoft.gadgetarium.dto.ProfileRequest;
 
 @Service
-public class ProfileServiceImpl implements ProfileService {
-    private final ProfileRepository profileRepository;
-    private final ModelMapper modelMapper;
-    public ProfileServiceImpl(ProfileRepository profileRepository, ModelMapper modelMapper) {
-        this.profileRepository = profileRepository;
-        this.modelMapper = modelMapper;
+public class ProfileServiceImpl extends ProfileService {
+    private final UserRepository userRepository;
+
+    public ProfileServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-    @Override
-    public ProfileDto getProfile(Long id) {
-        Profile profile = profileRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Profile", "id", id));
-        return modelMapper.map(profile, ProfileDto.class);
-    }
-    @Override
-    public ProfileDto updateProfile(Long id, ProfileDto profileDto) {
-        Profile profile = profileRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Profile", "id", id));
-        // Update profile fields
-        profile.setFirstName(profileDto.getFirstName());
-        profile.setLastName(profileDto.getLastName());
-        profile.setEmail(profileDto.getEmail());
-        profile.setPhone(profileDto.getPhone());
-        profile.setDeliveryAddress(profileDto.getDeliveryAddress());
-        profile.setOldPassword(profileDto.getOldPassword());
-        profile.setNewPassword(profileDto.getNewPassword());
-        Profile updatedProfile = profileRepository.save(profile);
-        return modelMapper.map(updatedProfile, ProfileDto.class);
+
+
+    public ProfileResponse getProfile(User user) {
+        User user1 = userRepository.findById(user.getId()).get();
+        if (user1 == null) {
+            throw new UsernameNotFoundException("Пользователь не найден");
+        }
+
+        ProfileResponse profileResponse = new ProfileResponse();
+        profileResponse.setFirstName(user1.getFirstName());
+        profileResponse.setLastName(user1.getLastName());
+        profileResponse.setEmail(user1.getEmail());
+        profileResponse.setDeliveryAddress(user1.getAddress().getStreetName());
+        profileResponse.setPhoneNumber(user1.getPhoneNumber());
+
+        return profileResponse;
     }
 }
