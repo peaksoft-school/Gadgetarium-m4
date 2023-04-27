@@ -44,14 +44,16 @@ public class BasketController {
         return basketService.removeAllProductFromBasket(id,productRequest);
     }
 
-    @GetMapping("products/{id}")
+    @GetMapping("products/{basketId}")
     @Operation(description = "Users and Admin can see a List of Cart's Products")
     public List<ProductResponse> productsOfCart(@PathVariable(name = "id", required = false) Long id, @RequestParam(value = "page", required = false)
     int page, @RequestParam(name = "size", required = false) int size) {
         return basketService.getProductsByBasketId(id, page, size);
     }
 
-    @GetMapping("order-sum/{id}")
+    @GetMapping("order-sum/{basketId}")
+    @Operation(description = "Users can see product's total sum in one Basket, quantity of products in Basket's," +
+            " the difference in the amounts and sum without discounts")
     public OrderSumResponse orderSum(@PathVariable("id") Long id){
         return basketService.sumOfOrders(id);
     }
