@@ -5,9 +5,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import us.peaksoft.gadgetarium.dto.*;
+import us.peaksoft.gadgetarium.dto.BasketResponse;
+import us.peaksoft.gadgetarium.dto.OrderSumResponse;
+import us.peaksoft.gadgetarium.dto.ProductRequest;
+import us.peaksoft.gadgetarium.dto.ProductResponse;
+import us.peaksoft.gadgetarium.dto.SimpleResponse;
 import us.peaksoft.gadgetarium.entity.Basket;
-import us.peaksoft.gadgetarium.entity.Order;
 import us.peaksoft.gadgetarium.entity.Product;
 import us.peaksoft.gadgetarium.repository.BasketRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
@@ -31,11 +34,11 @@ public class BasketServiceImpl implements BasketService {
         int disPrice = 0;
         if (productRequest.getBasketId() != null) {
             Basket basket = basketRepository.findById(productRequest.getBasketId()).get();
-            List<Product>products = basket.getProducts();
-            for(Product product1 : products){
-                totalSum+=product1.getPrice();
+            List<Product> products = basket.getProducts();
+            for (Product product1 : products) {
+                totalSum += product1.getPrice();
                 basket.setSum(totalSum);
-                currPrice+=product1.getCurrentPrice();
+                currPrice += product1.getCurrentPrice();
                 disPrice = totalSum - currPrice;
                 basket.setDisPercentSum(disPrice);
                 basket.setEndSum(currPrice);
@@ -80,11 +83,11 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public SimpleResponse removeAllProductFromBasket(Long id, ProductRequest productRequest) {
         Basket basket = basketRepository.findById(id).get();
-        List<Product>products = basket.getProducts();
+        List<Product> products = basket.getProducts();
         SimpleResponse simpleResponse = new SimpleResponse();
         int count = 0;
-        for(Product product : products) {
-            if (product.getBasketId() == null){
+        for (Product product : products) {
+            if (product.getBasketId() == null) {
                 product.setBasket(null);
                 count++;
                 simpleResponse.setMessage("Products were successfully deleted from cart. Count of products, that you've deleted: " + count);
@@ -101,7 +104,7 @@ public class BasketServiceImpl implements BasketService {
         return mapToResponseForSumOfOrders(basket);
     }
 
-    private OrderSumResponse mapToResponseForSumOfOrders(Basket basket){
+    private OrderSumResponse mapToResponseForSumOfOrders(Basket basket) {
         OrderSumResponse orderSumResponse = new OrderSumResponse();
         orderSumResponse.setQuantityOfProducts(basket.getQuantityOfProducts());
         orderSumResponse.setDisPercentSum(basket.getDisPercentSum());
