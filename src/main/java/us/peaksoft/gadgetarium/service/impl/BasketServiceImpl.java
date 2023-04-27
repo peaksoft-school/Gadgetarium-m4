@@ -27,19 +27,20 @@ public class BasketServiceImpl implements BasketService {
     public ProductResponse saveProductIntoBasket(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id).get();
         int totalSum = 0;
+        int currPrice = 0;
+        int disPrice = 0;
         if (productRequest.getBasketId() != null) {
             Basket basket = basketRepository.findById(productRequest.getBasketId()).get();
             List<Product>products = basket.getProducts();
             for(Product product1 : products){
-                totalSum+=product1.getCurrentPrice();
+                totalSum+=product1.getPrice();
                 basket.setSum(totalSum);
-                double discounted = (double) product1.getPrice() / 100;
-                double discountedPrice = product1.getPrice()*discounted;
-                int disPrice = (int) discountedPrice;
+                currPrice+=product1.getCurrentPrice();
+                disPrice = totalSum - currPrice;
                 basket.setDisPercentSum(disPrice);
-                int endSum = (int) (totalSum - discountedPrice);
-                basket.setEndSum(endSum);
+                basket.setEndSum(currPrice);
             }
+            basket.setQuantityOfProducts(products.size());
             product.setBasket(basket);
         }
         productRepository.save(product);
@@ -97,20 +98,6 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public OrderSumResponse sumOfOrders(Long id) {
         Basket basket = basketRepository.findById(id).get();
-        List<Product>products = basket.getProducts();
-        basket.setQuantityOfProducts(products.size());
-//        int totalSum = 0;
-//        int discountedPrice1 = 0;
-//        for(Product product : products){
-//            double discounted = (double) product.getPrice() / 100;
-//            double discountedPrice = product.getPrice()*discounted;
-//            basket.setDisPercentSum(discountedPrice);
-//            discountedPrice1 = (int)discountedPrice;
-//            totalSum+=product.getCurrentPrice();
-//            basket.setSum(totalSum);
-//        }
-//        int endSum = totalSum-discountedPrice1;
-//        basket.setEndSum(endSum);
         return mapToResponseForSumOfOrders(basket);
     }
 
