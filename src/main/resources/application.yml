@@ -8,10 +8,10 @@ spring:
         defer-datasource-initialization: true
         hibernate:
             ddl-auto: create
-#    sql:
-#        init:
-#            data-locations: classpath:db/data.sql
-#            mode: always
+    sql:
+        init:
+            data-locations: classpath:db/data.sql
+            mode: always
 application:
         bucket:
             name:  gadgetarium-m4
