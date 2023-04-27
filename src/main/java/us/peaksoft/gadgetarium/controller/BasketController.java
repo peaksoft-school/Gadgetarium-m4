@@ -52,8 +52,8 @@ public class BasketController {
     }
 
     @GetMapping("order-sum/{basketId}")
-    @Operation(description = "Users can see product's total sum in one Basket, quantity of products in Basket's," +
-            " the difference in the amounts and sum without discounts")
+    @Operation(description = "Users can see product's total sum, quantity of products," +
+            " the difference in the amounts and sum without discounts in one Basket, by basket's id")
     public OrderSumResponse orderSum(@PathVariable("id") Long id){
         return basketService.sumOfOrders(id);
     }
