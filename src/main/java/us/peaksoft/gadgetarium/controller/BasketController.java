@@ -51,4 +51,9 @@ public class BasketController {
     int page, @RequestParam(name = "size", required = false) int size) {
         return basketService.getProductsByBasketId(id, page, size);
     }
+
+    @GetMapping("order-sum/{id}")
+    public OrderSumResponse orderSum(@PathVariable("id") Long id){
+        return basketService.sumOfOrders(id);
+    }
 }

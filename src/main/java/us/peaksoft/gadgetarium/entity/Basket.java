@@ -22,6 +22,18 @@ public class Basket {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "basket")
     private List<Product> products;
 
+    @Column(name = "sum")
+    private int sum;
+
+    @Column(name = "discounted")
+    private int disPercentSum;
+
+    @Column(name = "quantity_of_products")
+    private int quantityOfProducts;
+
+    @Column(name = "end_sum")
+    private int endSum;
+
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 }

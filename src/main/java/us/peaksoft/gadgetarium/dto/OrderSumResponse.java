@@ -12,7 +12,7 @@ import lombok.Setter;
 public class OrderSumResponse {
 
     private int quantityOfProducts;
-    private int disPercent;
+    private int disPercentSum;
     private int sum;
     private int endSum;
 }

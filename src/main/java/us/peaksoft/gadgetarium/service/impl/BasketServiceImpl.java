@@ -5,11 +5,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import us.peaksoft.gadgetarium.dto.BasketResponse;
-import us.peaksoft.gadgetarium.dto.ProductRequest;
-import us.peaksoft.gadgetarium.dto.ProductResponse;
-import us.peaksoft.gadgetarium.dto.SimpleResponse;
+import us.peaksoft.gadgetarium.dto.*;
 import us.peaksoft.gadgetarium.entity.Basket;
+import us.peaksoft.gadgetarium.entity.Order;
 import us.peaksoft.gadgetarium.entity.Product;
 import us.peaksoft.gadgetarium.repository.BasketRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
@@ -28,8 +26,20 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public ProductResponse saveProductIntoBasket(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id).get();
+        int totalSum = 0;
         if (productRequest.getBasketId() != null) {
             Basket basket = basketRepository.findById(productRequest.getBasketId()).get();
+            List<Product>products = basket.getProducts();
+            for(Product product1 : products){
+                totalSum+=product1.getCurrentPrice();
+                basket.setSum(totalSum);
+                double discounted = (double) product1.getPrice() / 100;
+                double discountedPrice = product1.getPrice()*discounted;
+                int disPrice = (int) discountedPrice;
+                basket.setDisPercentSum(disPrice);
+                int endSum = (int) (totalSum - discountedPrice);
+                basket.setEndSum(endSum);
+            }
             product.setBasket(basket);
         }
         productRepository.save(product);
@@ -82,6 +92,35 @@ public class BasketServiceImpl implements BasketService {
             productRepository.save(product);
         }
         return simpleResponse;
+    }
+
+    @Override
+    public OrderSumResponse sumOfOrders(Long id) {
+        Basket basket = basketRepository.findById(id).get();
+        List<Product>products = basket.getProducts();
+        basket.setQuantityOfProducts(products.size());
+//        int totalSum = 0;
+//        int discountedPrice1 = 0;
+//        for(Product product : products){
+//            double discounted = (double) product.getPrice() / 100;
+//            double discountedPrice = product.getPrice()*discounted;
+//            basket.setDisPercentSum(discountedPrice);
+//            discountedPrice1 = (int)discountedPrice;
+//            totalSum+=product.getCurrentPrice();
+//            basket.setSum(totalSum);
+//        }
+//        int endSum = totalSum-discountedPrice1;
+//        basket.setEndSum(endSum);
+        return mapToResponseForSumOfOrders(basket);
+    }
+
+    private OrderSumResponse mapToResponseForSumOfOrders(Basket basket){
+        OrderSumResponse orderSumResponse = new OrderSumResponse();
+        orderSumResponse.setQuantityOfProducts(basket.getQuantityOfProducts());
+        orderSumResponse.setDisPercentSum(basket.getDisPercentSum());
+        orderSumResponse.setSum(basket.getSum());
+        orderSumResponse.setEndSum(basket.getEndSum());
+        return orderSumResponse;
     }
 
     private BasketResponse mapToResponse(Basket basket) {
