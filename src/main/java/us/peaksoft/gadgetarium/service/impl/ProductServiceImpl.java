@@ -76,9 +76,6 @@ public class ProductServiceImpl implements ProductService {
                 product.setDisPercent(product.getDiscount().getPercent());
             }
         }
-        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
         productRepository.save(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
 
