@@ -10,11 +10,12 @@ import us.peaksoft.gadgetarium.entity.Address;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfileResponse {
+    private Long id;
     private String FirstName;
-    private String lastName;
-    private String email;
+    private String LastName;
+    private String Email;
     private String Address;
-    private String phoneNumber;
+    private String PhoneNumber;
 
     // getters and setters
 }
