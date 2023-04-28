@@ -5,10 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import us.peaksoft.gadgetarium.dto.ProductDetailsResponse;
-import us.peaksoft.gadgetarium.dto.ProductRequest;
-import us.peaksoft.gadgetarium.dto.ProductResponse;
-import us.peaksoft.gadgetarium.dto.SimpleResponse;
+import us.peaksoft.gadgetarium.dto.*;
 import us.peaksoft.gadgetarium.entity.Category;
 import us.peaksoft.gadgetarium.entity.Discount;
 import us.peaksoft.gadgetarium.entity.Product;
@@ -17,11 +14,19 @@ import us.peaksoft.gadgetarium.repository.DiscountRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
 import us.peaksoft.gadgetarium.service.ProductService;
 
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import javax.mail.Message.RecipientType;
+
 
 @Service
 @RequiredArgsConstructor
@@ -81,6 +86,9 @@ public class ProductServiceImpl implements ProductService {
 
         return file;
     }
+
+
+
     @Override
     public ProductResponse save(ProductRequest productRequest) {
         Product product = mapToEntity(productRequest);
@@ -182,6 +190,36 @@ public class ProductServiceImpl implements ProductService {
             productsList.add(mapToDetailsResponse(product));
         }
         return productsList;
+    }//
+    @Override
+    public void sendEmail(ContactRequest contact) {
+String  subject="This email from user of Gadgetarium "+contact.getUsername()+" "+contact.getName()+" with number:"+contact.getNumber();
+        // Create a new JavaMail Session
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props);
+
+        try {
+            // Create a new email message
+            MimeMessage message1 = new MimeMessage(session);
+            message1.setFrom(new InternetAddress(contact.getEmail()));
+            message1.setRecipients(RecipientType.TO, InternetAddress.parse("bekturismanaliev97@gmail.com"));
+            message1.setSubject(subject);
+            message1.setText(contact.getMessage());
+
+            // Send the message
+            Transport.send(message1);
+
+            System.out.println("Email sent successfully!");
+
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email.");
+            e.printStackTrace();
+        }
     }
 
     @Override

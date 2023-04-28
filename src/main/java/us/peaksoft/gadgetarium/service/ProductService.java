@@ -1,9 +1,6 @@
 package us.peaksoft.gadgetarium.service;
 
-import us.peaksoft.gadgetarium.dto.ProductDetailsResponse;
-import us.peaksoft.gadgetarium.dto.SimpleResponse;
-import us.peaksoft.gadgetarium.dto.ProductRequest;
-import us.peaksoft.gadgetarium.dto.ProductResponse;
+import us.peaksoft.gadgetarium.dto.*;
 import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 
@@ -19,6 +16,9 @@ public interface ProductService {
     List<ProductResponse> filterProducts(String brand, String color, String ram, String rom, int fromPrice, int toPrice, int page, int size);
 
     File file(Long id) throws IOException;
+
+
+    void sendEmail(ContactRequest contact);
 
     ProductResponse save(ProductRequest productRequest);
 
