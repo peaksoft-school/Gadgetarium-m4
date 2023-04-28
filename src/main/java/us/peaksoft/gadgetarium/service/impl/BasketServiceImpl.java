@@ -35,6 +35,8 @@ public class BasketServiceImpl implements BasketService {
         if (productRequest.getBasketId() != null) {
             Basket basket = basketRepository.findById(productRequest.getBasketId()).get();
             List<Product> products = basket.getProducts();
+            product.setBasket(basket);
+            productRepository.save(product);
             for (Product product1 : products) {
                 totalSum += product1.getPrice();
                 basket.setSum(totalSum);
@@ -44,9 +46,8 @@ public class BasketServiceImpl implements BasketService {
                 basket.setEndSum(currPrice);
             }
             basket.setQuantityOfProducts(products.size());
-            product.setBasket(basket);
+            basketRepository.save(basket);
         }
-        productRepository.save(product);
         return mapToResponseForSavingIntoBasket(product);
     }
 

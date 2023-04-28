@@ -25,7 +25,7 @@ public class Basket {
     @Column(name = "sum")
     private int sum;
 
-    @Column(name = "discounted")
+    @Column(name = "discounted_difference")
     private int disPercentSum;
 
     @Column(name = "quantity_of_products")
