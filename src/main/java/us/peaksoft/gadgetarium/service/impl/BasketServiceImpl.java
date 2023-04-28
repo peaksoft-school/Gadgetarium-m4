@@ -64,7 +64,6 @@ public class BasketServiceImpl implements BasketService {
         int minusSum = 0;
         int minusEndSum = 0;
         int discountedPrice = 0;
-        int count = 0;
         if(productRequest.getBasketId() == null) {
             Basket basket = basketRepository.findById(basketId).get();
             List<Product> products = basket.getProducts();
@@ -74,18 +73,17 @@ public class BasketServiceImpl implements BasketService {
                 minusSum = basket.getSum() - product1.getPrice();
                 minusEndSum = basket.getEndSum() - product1.getCurrentPrice();
                 discountedPrice = minusSum - minusEndSum;
-                count++;
             }
             basket.setSum(minusSum);
             basket.setEndSum(minusEndSum);
             basket.setDisPercentSum(discountedPrice);
-            basket.setQuantityOfProducts(count);
-            product.setBasket(null);
-            productRepository.save(product);
+            basket.setQuantityOfProducts(products.size());
             basketRepository.save(basket);
             simpleResponse.setMessage("The product was successfully deleted from cart");
             simpleResponse.setHttpStatus(HttpStatus.OK);
         }
+            simpleResponse.setMessage("The product is not exists in cart");
+            simpleResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         return simpleResponse;
     }
 
@@ -114,6 +112,7 @@ public class BasketServiceImpl implements BasketService {
                 simpleResponse.setHttpStatus(HttpStatus.OK);
             }
             productRepository.save(product);
+            basketRepository.save(basket);
         }
         return simpleResponse;
     }
