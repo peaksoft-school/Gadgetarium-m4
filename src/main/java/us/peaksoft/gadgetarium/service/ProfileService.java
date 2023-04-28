@@ -1,39 +1,35 @@
 package us.peaksoft.gadgetarium.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.ProfileRequest;
 import us.peaksoft.gadgetarium.dto.ProfileSimpleResponse;
 import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.entity.User;
+    @Service
+    public class ProfileService {
+        @Autowired
+        private UserRepository userRepository;
+        public ProfileSimpleResponse updateProfile(Long id, ProfileRequest profileRequest) {
+            User user = userRepository.findById(id).get();
+            if (user == null) {
 
-@Service
-@RequiredArgsConstructor
-public class ProfileService {
-    @Autowired
-    private UserRepository userRepository;
+                return new ProfileSimpleResponse("Username not found");
+            }
+            if (!user.getPassword().equals(profileRequest.getOldPassword())) {
+                return new ProfileSimpleResponse("Current Password incorrect");
 
-    public ProfileSimpleResponse updateProfile(String email, ProfileRequest profileRequest) {
-        User user1 = userRepository.findByEmail(email);
+            }
 
-        if (user1 == null) {
-            throw new RuntimeException("Пользователь не найден");
+            user.setFirstName(profileRequest.getFirstName());
+            user.setLastName(profileRequest.getLastName());
+            user.setEmail(profileRequest.getEmail());
+            user.setAddress(profileRequest.getAddress());
+            user.setPhoneNumber(profileRequest.getPhoneNumber());
+            user.setPassword(profileRequest.getNewPassword());
+            userRepository.save(user);
+                return new ProfileSimpleResponse("success");
         }
-
-        if (!user1.getPassword().equals(profileRequest.getOldPassword())) {
-            throw new RuntimeException("Старый пароль неверный");
-        }
-
-        user1.setFirstName(profileRequest.getFirstName());
-        user1.setLastName(profileRequest.getLastName());
-        user1.setEmail(profileRequest.getEmail());
-        user1.setAddress(profileRequest.getAddress());
-        user1.setPhoneNumber(profileRequest.getPhoneNumber());
-        user1.setPassword(profileRequest.getNewPassword());
-
-        userRepository.save(user1);
-
-        return new ProfileSimpleResponse("Профиль успешно обновлен");
     }
-}
+
+

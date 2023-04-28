@@ -16,8 +16,8 @@ public class ProfileServiceImpl extends ProfileService {
     }
 
 
-    public ProfileResponse getProfile(User user) {
-        User user1 = userRepository.findById(user.getId()).get();
+    public ProfileResponse getProfile(Long id) {
+        User user1 = userRepository.findById(id).get();
         if (user1 == null) {
             throw new UsernameNotFoundException("Пользователь не найден");
         }
@@ -26,7 +26,7 @@ public class ProfileServiceImpl extends ProfileService {
         profileResponse.setFirstName(user1.getFirstName());
         profileResponse.setLastName(user1.getLastName());
         profileResponse.setEmail(user1.getEmail());
-        profileResponse.setDeliveryAddress(user1.getAddress().getStreetName());
+        profileResponse.setAddress(user1.getAddress().getStreetName());
         profileResponse.setPhoneNumber(user1.getPhoneNumber());
 
         return profileResponse;

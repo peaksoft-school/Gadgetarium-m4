@@ -1,11 +1,13 @@
 package us.peaksoft.gadgetarium.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import us.peaksoft.gadgetarium.entity.Address;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfileRequest {

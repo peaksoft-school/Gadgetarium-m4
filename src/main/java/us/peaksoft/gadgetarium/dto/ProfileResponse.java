@@ -13,7 +13,7 @@ public class ProfileResponse {
     private String FirstName;
     private String lastName;
     private String email;
-    private Address Address;
+    private String Address;
     private String phoneNumber;
 
     // getters and setters

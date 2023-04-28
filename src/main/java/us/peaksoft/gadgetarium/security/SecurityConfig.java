@@ -21,6 +21,7 @@ public class SecurityConfig {
             "/v3/api-docs.yaml",
             "/swagger-ui/**",
             "/swagger-ui.html"
+
     };
 
     @Bean
@@ -29,7 +30,9 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
+
                 .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/profile/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/public/register")
                 .permitAll()

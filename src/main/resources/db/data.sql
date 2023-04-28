@@ -51,3 +51,5 @@ INSERT INTO orders(id, count_of_product, order_status,
                    type_payment, delivery_man_id,
                    product_id, user_id)
 VALUES (1, 105, 'CREATED', 'dsk', 12000, 'card', 1, 1, 1)
+
+
