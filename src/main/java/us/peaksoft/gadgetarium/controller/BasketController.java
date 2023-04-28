@@ -46,7 +46,7 @@ public class BasketController {
 
     @GetMapping("products/{basketId}")
     @Operation(description = "Users and Admin can see a List of Cart's Products")
-    public List<ProductResponse> productsOfCart(@PathVariable(name = "id", required = false) Long id, @RequestParam(value = "page", required = false)
+    public List<ProductResponse> productsOfCart(@PathVariable(name = "basketId", required = false) Long id, @RequestParam(value = "page", required = false)
     int page, @RequestParam(name = "size", required = false) int size) {
         return basketService.getProductsByBasketId(id, page, size);
     }
@@ -54,7 +54,7 @@ public class BasketController {
     @GetMapping("order-sum/{basketId}")
     @Operation(description = "Users can see product's total sum, quantity of products," +
             " the difference in the amounts and sum without discounts in one Basket, by basket's id")
-    public OrderSumResponse orderSum(@PathVariable("id") Long id){
+    public OrderSumResponse orderSum(@PathVariable("basketId") Long id){
         return basketService.sumOfOrders(id);
     }
 }
