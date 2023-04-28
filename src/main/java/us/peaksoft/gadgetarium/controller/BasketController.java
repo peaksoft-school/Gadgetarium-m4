@@ -31,10 +31,11 @@ public class BasketController {
         return basketService.saveProductIntoBasket(id, productRequest);
     }
 
-    @PutMapping("products/{id}")
+    @PutMapping("products/{productId}/{basketId}")
     @Operation(description = "Users and Admin can delete a Product from Cart")
-    public SimpleResponse deleteProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
-        return basketService.removeProductFromBasket(id, productRequest);
+    public SimpleResponse deleteProduct(@PathVariable("productId") Long id, @PathVariable("basketId") Long basketId,
+                                        @RequestBody ProductRequest productRequest) {
+        return basketService.removeProductFromBasket(id,basketId, productRequest);
     }
 
 

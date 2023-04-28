@@ -9,7 +9,7 @@ public interface BasketService {
 
     BasketResponse getById(Long id);
 
-    SimpleResponse removeProductFromBasket(Long id, ProductRequest productRequest);
+    SimpleResponse removeProductFromBasket(Long productId,Long basketId, ProductRequest productRequest);
 
     List<ProductResponse> getProductsByBasketId(Long id, int page, int size);
 

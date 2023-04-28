@@ -58,15 +58,34 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public SimpleResponse removeProductFromBasket(Long id, ProductRequest productRequest) {
-        Product product = productRepository.findById(id).get();
+    public SimpleResponse removeProductFromBasket(Long productId, Long basketId, ProductRequest productRequest) {
+        Product product = productRepository.findById(productId).get();
         SimpleResponse simpleResponse = new SimpleResponse();
-        if (productRequest.getBasketId() == null) {
+        int minusSum = 0;
+        int minusEndSum = 0;
+        int discountedPrice = 0;
+        int count = 0;
+        if(productRequest.getBasketId() == null) {
+            Basket basket = basketRepository.findById(basketId).get();
+            List<Product> products = basket.getProducts();
             product.setBasket(null);
+            productRepository.save(product);
+            for (Product product1 : products) {
+                minusSum = basket.getSum() - product1.getPrice();
+                minusEndSum = basket.getEndSum() - product1.getCurrentPrice();
+                discountedPrice = minusSum - minusEndSum;
+                count++;
+            }
+            basket.setSum(minusSum);
+            basket.setEndSum(minusEndSum);
+            basket.setDisPercentSum(discountedPrice);
+            basket.setQuantityOfProducts(count);
+            product.setBasket(null);
+            productRepository.save(product);
+            basketRepository.save(basket);
             simpleResponse.setMessage("The product was successfully deleted from cart");
             simpleResponse.setHttpStatus(HttpStatus.OK);
         }
-        productRepository.save(product);
         return simpleResponse;
     }
 
