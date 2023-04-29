@@ -17,7 +17,4 @@ public interface BasketRepository extends JpaRepository<Basket, Long> {
 
     @Query("SELECT p FROM Product p JOIN p.basket basket WHERE basket.id=:id")
     List<Product> getProductsByBasketId(@Param("id") Long id, Pageable pageable);
-
-    @Query("SELECT p FROM Product p JOIN p.basket basket WHERE basket.id=:id")
-    Product getProducts(@PathVariable("id") Long id);
 }
