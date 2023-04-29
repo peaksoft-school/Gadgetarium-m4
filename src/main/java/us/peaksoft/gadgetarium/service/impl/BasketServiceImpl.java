@@ -60,30 +60,35 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public SimpleResponse removeProductFromBasket(Long productId, Long basketId, ProductRequest productRequest) {
         Product product = productRepository.findById(productId).get();
+        Basket basket = basketRepository.findById(basketId).get();
+        List<Product> products = basket.getProducts();
         SimpleResponse simpleResponse = new SimpleResponse();
         int minusSum = 0;
         int minusEndSum = 0;
         int discountedPrice = 0;
-        if(productRequest.getBasketId() == null) {
-            Basket basket = basketRepository.findById(basketId).get();
-            List<Product> products = basket.getProducts();
-            product.setBasket(null);
-            productRepository.save(product);
-            for (Product product1 : products) {
-                minusSum = basket.getSum() - product1.getPrice();
-                minusEndSum = basket.getEndSum() - product1.getCurrentPrice();
-                discountedPrice = minusSum - minusEndSum;
+        int count = 0;
+        for (Product product1 : products) {
+            if (productId == product1.getId() && product1!=null) {
+                if(productRequest.getBasketId() == null) {
+                    product1.setBasket(null);
+                    productRepository.save(product1);
+                    minusSum = basket.getSum() - product1.getPrice();
+                    minusEndSum = basket.getEndSum() - product1.getCurrentPrice();
+                    discountedPrice = minusSum - minusEndSum;
+                    basket.setSum(minusSum);
+                    basket.setEndSum(minusEndSum);
+                    basket.setDisPercentSum(discountedPrice);
+                    count++;
+                    basket.setQuantityOfProducts(products.size() - count);
+                    simpleResponse.setMessage("The product was successfully deleted from cart");
+                    simpleResponse.setHttpStatus(HttpStatus.OK);
+                }
+            } else {
+                simpleResponse.setMessage("The product is not exists in cart");
+                simpleResponse.setHttpStatus(HttpStatus.NOT_FOUND);
             }
-            basket.setSum(minusSum);
-            basket.setEndSum(minusEndSum);
-            basket.setDisPercentSum(discountedPrice);
-            basket.setQuantityOfProducts(products.size());
-            basketRepository.save(basket);
-            simpleResponse.setMessage("The product was successfully deleted from cart");
-            simpleResponse.setHttpStatus(HttpStatus.OK);
         }
-            simpleResponse.setMessage("The product is not exists in cart");
-            simpleResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+        basketRepository.save(basket);
         return simpleResponse;
     }
 
