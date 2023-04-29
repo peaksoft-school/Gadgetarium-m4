@@ -7,17 +7,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.AuthenticationRequest;
 import us.peaksoft.gadgetarium.dto.AuthenticationResponse;
-import us.peaksoft.gadgetarium.entity.Chosen;
 import us.peaksoft.gadgetarium.entity.Basket;
+import us.peaksoft.gadgetarium.entity.Chosen;
 import us.peaksoft.gadgetarium.entity.User;
-import us.peaksoft.gadgetarium.repository.BasketRepository;
 import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.dto.RegisterRequest;
 import us.peaksoft.gadgetarium.enums.Role;
 import us.peaksoft.gadgetarium.security.JwtService;
-
 import java.time.LocalDate;
-
 @Service
 @RequiredArgsConstructor
 public class AuthService {

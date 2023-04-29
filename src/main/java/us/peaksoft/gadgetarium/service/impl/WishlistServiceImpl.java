@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.*;
-import us.peaksoft.gadgetarium.entity.Chosen;
+import us.peaksoft.gadgetarium.entity.Wishlist;
 import us.peaksoft.gadgetarium.entity.Product;
 import us.peaksoft.gadgetarium.repository.WishlistRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
@@ -26,8 +26,8 @@ public class WishlistServiceImpl implements WishlistService {
     public ProductResponse saveProductInChosen(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id).get();
         if (productRequest.getChosenId() != null) {
-            Chosen chosen = wishlistRepository.findById(productRequest.getChosenId()).get();
-            product.setChosen(chosen);
+            Wishlist wishlist = wishlistRepository.findById(productRequest.getChosenId()).get();
+            product.setWishlist(wishlist);
         }
         productRepository.save(product);
         return mapToResponseForProduct(product);
@@ -35,8 +35,8 @@ public class WishlistServiceImpl implements WishlistService {
 
     @Override
     public WishlistResponse getById(Long id) {
-        Chosen chosen = wishlistRepository.findById(id).get();
-        return mapToResponse(chosen);
+        Wishlist wishlist = wishlistRepository.findById(id).get();
+        return mapToResponse(wishlist);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class WishlistServiceImpl implements WishlistService {
         Product product = productRepository.findById(id).get();
         SimpleResponse simpleResponse = new SimpleResponse();
         if (productRequest.getChosenId() == null) {
-            product.setChosen(null);
+            product.setWishlist(null);
             simpleResponse.setMessage("This product is successful deleted...");
             simpleResponse.setHttpStatus(HttpStatus.OK);
         }
@@ -65,12 +65,12 @@ public class WishlistServiceImpl implements WishlistService {
 
     @Override
     public SimpleResponse deleteAllProducts(Long id, ProductRequest productRequest) {
-        Chosen chosen = wishlistRepository.findById(id).get();
-        List<Product> products = chosen.getProducts();
+        Wishlist wishlist = wishlistRepository.findById(id).get();
+        List<Product> products = wishlist.getProducts();
         SimpleResponse simpleResponse = new SimpleResponse();
         for (Product product : products) {
             if (product.getChosenId() == null) {
-                product.setChosen(null);
+                product.setWishlist(null);
                 simpleResponse.setMessage("All products is successful deleted");
                 simpleResponse.setHttpStatus(HttpStatus.OK);
             }
@@ -79,9 +79,9 @@ public class WishlistServiceImpl implements WishlistService {
         return simpleResponse;
     }
 
-    private WishlistResponse mapToResponse(Chosen chosen) {
+    private WishlistResponse mapToResponse(Wishlist wishlist) {
         WishlistResponse wishlistResponse = new WishlistResponse();
-        wishlistResponse.setId(chosen.getId());
+        wishlistResponse.setId(wishlist.getId());
         return wishlistResponse;
     }
 

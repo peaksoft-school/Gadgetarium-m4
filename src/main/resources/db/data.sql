@@ -1,7 +1,7 @@
 INSERT INTO address(city_name, country_name, postal_code, state_name, street_name)
 VALUES ('Moscow', 'Russia', '12321', 'MO', 'Arbatsckaya');
 
-INSERT INTO chosen(id)
+INSERT INTO wishlist(id)
 VALUES (1);
 
 INSERT INTO order_list(id)
@@ -46,7 +46,7 @@ INSERT INTO products(id, appointment, brand,
                      ram, rom,
                      sim, weight,
                      basket_id,
-                      chosen_id,
+                      wishlist_id,
                      discount_id,
                      news_id, order_list_id, promotion_id, category_id)
 VALUES (1, 'phone', 'ASUS', '128GB', 'RED', 45000, 'DWQ2', '01-02-2024',
