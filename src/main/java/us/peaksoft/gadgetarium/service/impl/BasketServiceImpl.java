@@ -68,7 +68,7 @@ public class BasketServiceImpl implements BasketService {
         int discountedPrice = 0;
         int count = 0;
         for (Product product1 : products) {
-            if (productId == product1.getId() && product1!=null) {
+            if (product.getId() == product1.getId()) {
                 if(productRequest.getBasketId() == null) {
                     product1.setBasket(null);
                     productRepository.save(product1);
@@ -87,6 +87,11 @@ public class BasketServiceImpl implements BasketService {
                 simpleResponse.setMessage("The product is not exists in cart");
                 simpleResponse.setHttpStatus(HttpStatus.NOT_FOUND);
             }
+        }
+        if(products.isEmpty()){
+            System.out.println("The cart is empty");
+            simpleResponse.setMessage("The cart is empty");
+            simpleResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         }
         basketRepository.save(basket);
         return simpleResponse;
@@ -110,15 +115,24 @@ public class BasketServiceImpl implements BasketService {
         SimpleResponse simpleResponse = new SimpleResponse();
         int count = 0;
         for (Product product : products) {
-            if (product.getBasketId() == null) {
+            if (productRequest.getBasketId() == null) {
+                basket.setQuantityOfProducts(0);
+                basket.setSum(0);
+                basket.setDisPercentSum(0);
+                basket.setEndSum(0);
                 product.setBasket(null);
                 count++;
                 simpleResponse.setMessage("Products were successfully deleted from cart. Count of products, that you've deleted: " + count);
                 simpleResponse.setHttpStatus(HttpStatus.OK);
             }
             productRepository.save(product);
-            basketRepository.save(basket);
         }
+        if(products.isEmpty()){
+            System.out.println("The cart is empty");
+            simpleResponse.setMessage("The cart is empty");
+            simpleResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+        }
+        basketRepository.save(basket);
         return simpleResponse;
     }
 
