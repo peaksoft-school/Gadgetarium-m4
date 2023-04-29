@@ -128,7 +128,6 @@ public class BasketServiceImpl implements BasketService {
             productRepository.save(product);
         }
         if(products.isEmpty()){
-            System.out.println("The cart is empty");
             simpleResponse.setMessage("The cart is empty");
             simpleResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         }
