@@ -112,7 +112,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse saveDescription(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id).get();
-        product.setPDF(productRequest.getPDF());
         product.setImage(productRequest.getImage());
         product.setDescription(productRequest.getDescription());
         productRepository.save(product);
@@ -143,7 +142,6 @@ public class ProductServiceImpl implements ProductService {
             Category category = categoryRepository.findById(productRequest.getCategoryId()).get();
             product.setCategory(category);
         }
-        product.setPDF(productRequest.getPDF());
         product.setDescription(productRequest.getDescription());
         productRepository.saveAndFlush(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
@@ -246,7 +244,6 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-        productResponse.setPDF(product.getPDF());
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
@@ -274,7 +271,6 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-        productResponse.setPDF(product.getPDF());
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
