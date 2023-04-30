@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/public/register")
                 .permitAll()
                 .requestMatchers("/api/products/**").permitAll()
+                .requestMatchers("/api/products/contacts").permitAll()
                 .requestMatchers("/api/discounts/**").permitAll()
                 .requestMatchers("/api/feedbacks/**").permitAll()
                 .requestMatchers("/api/cart/**").permitAll()

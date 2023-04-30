@@ -13,8 +13,9 @@ import us.peaksoft.gadgetarium.repository.CategoryRepository;
 import us.peaksoft.gadgetarium.repository.DiscountRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
 import us.peaksoft.gadgetarium.service.ProductService;
-
+import javax.mail.*;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -25,7 +26,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.mail.Message.RecipientType;
 
 
 @Service
@@ -120,7 +120,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse saveDescription(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id).get();
-        product.setPDF(productRequest.getPDF());
         product.setImage(productRequest.getImage());
         product.setDescription(productRequest.getDescription());
         productRepository.save(product);
@@ -151,7 +150,6 @@ public class ProductServiceImpl implements ProductService {
             Category category = categoryRepository.findById(productRequest.getCategoryId()).get();
             product.setCategory(category);
         }
-        product.setPDF(productRequest.getPDF());
         product.setDescription(productRequest.getDescription());
         productRepository.saveAndFlush(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
@@ -193,27 +191,32 @@ public class ProductServiceImpl implements ProductService {
     }//
     @Override
     public void sendEmail(ContactRequest contact) {
-String  subject="This email from user of Gadgetarium "+contact.getUsername()+" "+contact.getName()+" with number:"+contact.getNumber();
+        String  subject="This email from user of Gadgetarium";
+        String body="Username:"+contact.getUsername()+" Name:"+contact.getName()+" Number:"+contact.getNumber()+" "+contact.getMessage();
         // Create a new JavaMail Session
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
         props.put("mail.smtp.starttls.enable", "true");
-
-        Session session = Session.getInstance(props);
+        Authenticator auth = new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("bekturismanaliev97@gmail.com","rsbeagaizjtvlttz");
+            }
+        };
+        Session session = Session.getInstance(props,auth);
 
         try {
             // Create a new email message
             MimeMessage message1 = new MimeMessage(session);
             message1.setFrom(new InternetAddress(contact.getEmail()));
-            message1.setRecipients(RecipientType.TO, InternetAddress.parse("bekturismanaliev97@gmail.com"));
+            message1.setRecipients(MimeMessage.RecipientType.TO,"bekturismanaliev97@gmail.com");
             message1.setSubject(subject);
-            message1.setText(contact.getMessage());
+            message1.setText(body);
 
             // Send the message
             Transport.send(message1);
-
             System.out.println("Email sent successfully!");
 
         } catch (MessagingException e) {
@@ -284,7 +287,7 @@ String  subject="This email from user of Gadgetarium "+contact.getUsername()+" "
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-        productResponse.setPDF(product.getPDF());
+
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
@@ -312,7 +315,6 @@ String  subject="This email from user of Gadgetarium "+contact.getUsername()+" "
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-        productResponse.setPDF(product.getPDF());
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));

@@ -48,10 +48,11 @@ public class ProductController {
     }
 
     @PostMapping("contacts")
-public void contact(ContactRequest contact){
+public void contact(@RequestBody ContactRequest contact){
         productService.sendEmail(contact);
 }
-    @GetMapping("/download/{id}")
+
+    @GetMapping("download/{id}")
     @Operation(description = "The method works automatically, all users can use this method")
     public ResponseEntity<InputStreamResource> PDFfile(Long id) throws IOException {
         File file=productService.file(id);
