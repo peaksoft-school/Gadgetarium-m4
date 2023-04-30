@@ -191,27 +191,32 @@ public class ProductServiceImpl implements ProductService {
     }//
     @Override
     public void sendEmail(ContactRequest contact) {
-String  subject="This email from user of Gadgetarium "+contact.getUsername()+" "+contact.getName()+" with number:"+contact.getNumber();
+        String  subject="This email from user of Gadgetarium";
+        String body="Username:"+contact.getUsername()+" Name:"+contact.getName()+" Number:"+contact.getNumber()+" "+contact.getMessage();
         // Create a new JavaMail Session
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
         props.put("mail.smtp.starttls.enable", "true");
-
-        Session session = Session.getInstance(props);
+        Authenticator auth = new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("bekturismanaliev97@gmail.com","rsbeagaizjtvlttz");
+            }
+        };
+        Session session = Session.getInstance(props,auth);
 
         try {
             // Create a new email message
             MimeMessage message1 = new MimeMessage(session);
             message1.setFrom(new InternetAddress(contact.getEmail()));
-            message1.setRecipients(RecipientType.TO, InternetAddress.parse("bekturismanaliev97@gmail.com"));
+            message1.setRecipients(MimeMessage.RecipientType.TO,"bekturismanaliev97@gmail.com");
             message1.setSubject(subject);
-            message1.setText(contact.getMessage());
+            message1.setText(body);
 
             // Send the message
             Transport.send(message1);
-
             System.out.println("Email sent successfully!");
 
         } catch (MessagingException e) {
