@@ -188,12 +188,12 @@ public class ProductServiceImpl implements ProductService {
             productsList.add(mapToDetailsResponse(product));
         }
         return productsList;
-    }//
+    }
     @Override
     public void sendEmail(ContactRequest contact) {
         String  subject="This email from user of Gadgetarium";
-        String body=contact.getUsername()+" "+contact.getName()+" with number:"+contact.getNumber()
-                +"  Write:"+contact.getMessage();
+        String body=contact.getUsername()+" "+contact.getName()+", with number:"+contact.getNumber()
+                +" Email:"+contact.getEmail() +"\n"+" Write:"+contact.getMessage();
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
