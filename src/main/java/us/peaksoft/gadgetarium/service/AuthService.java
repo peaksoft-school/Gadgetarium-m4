@@ -5,11 +5,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import us.peaksoft.gadgetarium.dto.AuthenticationRequest;
-import us.peaksoft.gadgetarium.dto.AuthenticationResponse;
+import us.peaksoft.gadgetarium.dto.*;
 import us.peaksoft.gadgetarium.entity.User;
 import us.peaksoft.gadgetarium.repository.UserRepository;
-import us.peaksoft.gadgetarium.dto.RegisterRequest;
 import us.peaksoft.gadgetarium.enums.Role;
 import us.peaksoft.gadgetarium.security.JwtService;
 import java.time.LocalDate;
@@ -70,5 +68,4 @@ public class AuthService {
         User user = userRepository.findByEmail(token.getName());
         return view(tokenUtil.generateToken(user),"successful",user);
     }
-
 }

@@ -11,8 +11,10 @@ import us.peaksoft.gadgetarium.entity.Address;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfileRequest {
-    private String address;
+    private String token;
+    private String Email;
+    private String StreetName;
     private String FirstName;
     private String LastName;
-    private String phoneNumber;
+    private String PhoneNumber;
 }
