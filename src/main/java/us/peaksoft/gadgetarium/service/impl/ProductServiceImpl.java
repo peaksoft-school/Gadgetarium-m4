@@ -188,6 +188,36 @@ public class ProductServiceImpl implements ProductService {
             productsList.add(mapToDetailsResponse(product));
         }
         return productsList;
+    }//
+    @Override
+    public void sendEmail(ContactRequest contact) {
+String  subject="This email from user of Gadgetarium "+contact.getUsername()+" "+contact.getName()+" with number:"+contact.getNumber();
+        // Create a new JavaMail Session
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props);
+
+        try {
+            // Create a new email message
+            MimeMessage message1 = new MimeMessage(session);
+            message1.setFrom(new InternetAddress(contact.getEmail()));
+            message1.setRecipients(RecipientType.TO, InternetAddress.parse("bekturismanaliev97@gmail.com"));
+            message1.setSubject(subject);
+            message1.setText(contact.getMessage());
+
+            // Send the message
+            Transport.send(message1);
+
+            System.out.println("Email sent successfully!");
+
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email.");
+            e.printStackTrace();
+        }
     }
     @Override
     public void sendEmail(ContactRequest contact) {

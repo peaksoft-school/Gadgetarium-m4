@@ -18,6 +18,12 @@ public class GadgetariumApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GadgetariumApplication.class, args);
 		System.out.println("Welcome colleagues, project name is Gadgetarium");
+//		ContactRequest contact = new ContactRequest();
+//		contact.setNumber("8393939393993");
+//		contact.setUsername("king kobra");
+//		contact.setName("aiadai");
+//		contact.setMessage("hello");
+//		contact.setEmail("jibek.82@gmail.com");
 	}
 	@GetMapping("/")
 	public String greetingPage(){
