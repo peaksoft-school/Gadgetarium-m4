@@ -54,7 +54,7 @@ public void contact(@RequestBody ContactRequest contact){
 
     @GetMapping("download/{id}")
     @Operation(description = "The method works automatically, all users can use this method")
-    public ResponseEntity<InputStreamResource> PDFfile(Long id) throws IOException {
+    public ResponseEntity<InputStreamResource> PDFfile(@PathVariable("id") Long id) throws IOException {
         File file=productService.file(id);
 
         HttpHeaders headers = new HttpHeaders();
