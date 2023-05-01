@@ -1,15 +1,12 @@
 package us.peaksoft.gadgetarium.service;
 
 import us.peaksoft.gadgetarium.dto.*;
+
 import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 
 
 import javax.mail.Address;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 public interface ProductService {
 
     List<ProductResponse> getAllProducts();
@@ -17,6 +14,7 @@ public interface ProductService {
     List<ProductResponse> filterProducts(String brand, String color, String ram, String rom, int fromPrice, int toPrice, int page, int size);
 
     File file(Long id) throws IOException;
+
     ProductResponse save(ProductRequest productRequest);
 
     ProductResponse savePriceAndQuantity(Long id, ProductRequest productRequest);
