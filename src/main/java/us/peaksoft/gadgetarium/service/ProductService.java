@@ -1,9 +1,9 @@
 package us.peaksoft.gadgetarium.service;
 
 import us.peaksoft.gadgetarium.dto.*;
-
-import us.peaksoft.gadgetarium.enums.Brand;
-import us.peaksoft.gadgetarium.enums.Color;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 
 import javax.mail.Address;
