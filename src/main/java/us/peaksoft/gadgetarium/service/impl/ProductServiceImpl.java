@@ -17,6 +17,9 @@ import us.peaksoft.gadgetarium.repository.DiscountRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
 import us.peaksoft.gadgetarium.service.ProductService;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +53,34 @@ public class ProductServiceImpl implements ProductService {
         }
         return productsList;
     }
+    @Override
+    public File file(Long id) throws IOException {
+        File file =new File("Info.pdf");
+        FileWriter writer = new FileWriter("Info.pdf");
 
+        Product product = productRepository.findById(id).get();
+        writer.write("Product name: " + product.getName() + "                    ");
+        writer.write("Product brand: " + product.getBrand() + "                    ");
+        writer.write("Product color: " + product.getColor() + "                    ");
+        writer.write("Product price: " + product.getPrice() + "                    ");
+        writer.write("Date of issue: " + product.getDateOfIssue() + "                    ");
+        writer.write("Product os: " + product.getOs() + "                    ");
+        writer.write("Product ram: " + product.getRam() + "                    ");
+        writer.write("Product sim: " + product.getSim() + "                    ");
+        writer.write("Product rom: " + product.getRom() + "                    ");
+        writer.write("Product cpu: " + product.getCpu() + "                    ");
+        writer.write("Product appointment: " + product.getAppointment() + "                    ");
+        writer.write("Product capacity battery: " + product.getCapacityBattery() + "                    ");
+        writer.write("Product guarantee: " + product.getGuarantee() + "                    ");
+        writer.write("Product description: " + product.getDisplayInch() + "                    ");
+        writer.write("Product image: " + product.getImage() + "                    ");
+        writer.write("Product quantity of similar: " + product.getQuantityOfSim() + "                    ");
+        writer.write("Product weight: " + product.getWeight() + "                    ");
+        writer.write("Product category: " + product.getCategory() + "                    ");
+        writer.close();
+
+        return file;
+    }
     @Override
     public ProductResponse save(ProductRequest productRequest) {
         Product product = mapToEntity(productRequest);
@@ -82,7 +112,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse saveDescription(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id).get();
-        product.setPDF(productRequest.getPDF());
         product.setImage(productRequest.getImage());
         product.setDescription(productRequest.getDescription());
         productRepository.save(product);
@@ -113,7 +142,6 @@ public class ProductServiceImpl implements ProductService {
             Category category = categoryRepository.findById(productRequest.getCategoryId()).get();
             product.setCategory(category);
         }
-        product.setPDF(productRequest.getPDF());
         product.setDescription(productRequest.getDescription());
         productRepository.saveAndFlush(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
@@ -216,7 +244,6 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-        productResponse.setPDF(product.getPDF());
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
@@ -244,7 +271,6 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-        productResponse.setPDF(product.getPDF());
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
