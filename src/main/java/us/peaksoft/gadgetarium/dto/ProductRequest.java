@@ -14,24 +14,44 @@ import us.peaksoft.gadgetarium.enums.OS;
 @AllArgsConstructor
 public class ProductRequest {
     private String name;
+
     private Brand brand;
+
     private int price;
+
     private Color color;
+
     private String dateOfIssue;
+
     private OS os;
+
     private String ram;
+
     private String rom;
+
     private String sim;
+
     private Long quantityOfSim;
+
     private String cpu;
+
     private String weight;
+
     private String guarantee;
+
     private String displayInch;
+
     private String appointment;
+
     private String capacityBattery;
+
     private String image;
+
     private String description;
+
     private Long categoryId;
+
     private Long discountId;
+
     private Long basketId;
 }

@@ -39,16 +39,25 @@ public class Product {
     private OS os;
 
     private String ram;
+
     private String rom;
+
     private String sim;
+
     private Long quantityOfSim;
+
     private String cpu;
+
     private String weight;
+
     private String guarantee;
+
     private String image;
+
     private String displayInch;
+
     private String appointment;
-    private String PDF;
+
     private String description;
 
     @Column(name = "capacity_battery")

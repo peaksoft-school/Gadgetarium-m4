@@ -18,27 +18,50 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductResponse {
     private Long id;
+
     private String name;
+
     private int price;
+
     private double currentPrice;
+
     private Brand brand;
+
     private Color color;
+
     private String dateOfIssue;
+
     private OS os;
+
     private String ram;
+
     private String rom;
+
     private String sim;
+
     private Long quantityOfSim;
+
     private String cpu;
+
     private String weight;
+
     private String guarantee;
+
     private String image;
+
     private String displayInch;
+
     private String appointment;
+
     private String capacityBattery;
+
     private String description;
+
     private Long quantityOfProducts;
+
     private int disPercent;
+
     private String categoryName;
+
     private Boolean inBasket;
 }
