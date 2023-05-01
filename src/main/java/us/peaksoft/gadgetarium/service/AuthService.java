@@ -65,7 +65,7 @@ public class AuthService {
     public AuthenticationResponse authenticate(AuthenticationRequest request){
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword());
         authenticationManager.authenticate(token);
-        User user = userRepository.findByEmail(token.getName());
+        User user = userRepository.findByEmail(token.getName()).get();
         return view(tokenUtil.generateToken(user),"successful",user);
     }
 }
