@@ -31,7 +31,6 @@ public interface ProductService {
 
     List<ProductDetailsResponse> productDetails();
 
-
     void sendEmail(ContactRequest contact);
 
     List<ProductResponse> searchAndPagination(String text, int page, int size);
