@@ -62,6 +62,5 @@ public class ProductResponse {
     private int disPercent;
 
     private String categoryName;
-
     private Boolean inBasket;
 }
