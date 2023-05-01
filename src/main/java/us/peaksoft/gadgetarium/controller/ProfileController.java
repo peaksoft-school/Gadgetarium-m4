@@ -1,22 +1,23 @@
 package us.peaksoft.gadgetarium.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import us.peaksoft.gadgetarium.dto.*;
-import us.peaksoft.gadgetarium.entity.Address;
-import us.peaksoft.gadgetarium.entity.User;
-import us.peaksoft.gadgetarium.repository.UserRepository;
+import org.springframework.web.bind.annotation.*;
+import us.peaksoft.gadgetarium.exception.NotFoundException;
 import us.peaksoft.gadgetarium.security.JwtService;
+import us.peaksoft.gadgetarium.dto.*;
+import us.peaksoft.gadgetarium.entity.*;
+import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.service.ProfileService;
 import us.peaksoft.gadgetarium.dto.ProfileRequest;
-
+import us.peaksoft.gadgetarium.dto.ProfileChangePasswordRequest;
 
 @RestController
-
-@RequestMapping("/api/profile")
-@Tag(name = "ProfileController", description = "API для профиля")
+@RequestMapping("/api/public/profile")
+@Tag(name = "ProfileController", description = "API endpoints for managing profile")
 public class ProfileController {
     @Autowired
     private ProfileService profileService;
@@ -25,47 +26,69 @@ public class ProfileController {
     @Autowired
     private UserRepository userRepository;
 
-    @Operation(description = "Обновление доступных данных профиля")
-    @PutMapping()
-    public ProfileSimpleResponse updateProfile(@RequestBody ProfileRequest profileRequest) {
-       return profileService.updateProfile(profileRequest);
+    @Operation(description = "Profile API | Change Profile Information")
+    @PostMapping("update")
+    public SimpleResponse update (@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProfileRequest profileRequest) {
+        SimpleResponse response = new SimpleResponse();
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            response.setHttpStatus(HttpStatus.UNAUTHORIZED);
+            response.setMessage("Invalid authorization header");
+            return response;
+        }
+        String token = authorizationHeader.substring(7);
+        if (jwts.tokenExpired(token)) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Invalid token");
+            return response;
+        }
+        User user = userRepository.findByEmail(jwts.extractUsername(token)).get();
+        if (user == null) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Invalid user from token");
+            return response;
+        }
+        Long id = user.getId();
+       return profileService.update(profileRequest, id);
     }
-    @Operation(description = "Обновление пароля")
-    @PostMapping("change-password")
-    public ProfileSimpleResponse changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
-        return profileService.changePassword(changePasswordRequest);
+    @Operation(description = "Profile API | Update password")
+    @PostMapping("password")
+    public SimpleResponse changePassword(@RequestBody ProfileChangePasswordRequest passwordRequest, @RequestHeader("Authorization") String authorizationHeader) {
+        SimpleResponse response = new SimpleResponse();
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Invalid authorization header");
+            return response;
+        }
+        String token = authorizationHeader.substring(7);
+        if (jwts.tokenExpired(token)) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Invalid token");
+            return response;
+        }
+        User user = userRepository.findByEmail(jwts.extractUsername(token)).get();
+        if (user == null) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Invalid user from token");
+            return response;
+        }
+        Long id = user.getId();
+        return profileService.changePassword(passwordRequest, id);
     }
-    @Operation(description = "Получить данные профиля пользователя")
-    @GetMapping("{token}")
-    public ResponseEntity<ProfileResponse> getProfile(@PathVariable("token") String token)
+    @Operation(description = "Profile API | Get User Information")
+    @GetMapping("get-info")
+    public ResponseEntity<?> getById(@RequestHeader("Authorization") String authorizationHeader)
     {
-        User user1 = userRepository.findByEmail(jwts.extractUsername(token));
-        Address address = user1.getAddress();
-        if (address == null)
-        {
-            setAddress = "nenull"
-            return ResponseEntity.notFound().build();
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid authorization header");
         }
-        if (user1 == null) {
-            return ResponseEntity.notFound().build();
-        }
-        if(!(profileService.isTokenValid(token))){
+        String token = authorizationHeader.substring(7);
 
-            return ResponseEntity.notFound().build();
+        User user = userRepository.findByEmail(jwts.extractUsername(token)).get();
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user from Authorization Headers");
         }
-        if(jwts.isTokenExpired(token))
-        {
-            return  ResponseEntity.notFound().build();
-        }
-        ProfileResponse profileResponse = new ProfileResponse();
-        profileResponse.setId(user1.getId());
-        profileResponse.setFirstName(user1.getFirstName());
-        profileResponse.setLastName(user1.getLastName());
-        profileResponse.setEmail(user1.getEmail());
-        //profileResponse.setAddress(address.getStreetName());
-        profileResponse.setPhoneNumber(user1.getPhoneNumber());
-
-        return ResponseEntity.ok(profileResponse);
+        Long id = user.getId();
+        return profileService.getById(id);
     }
 }
 
