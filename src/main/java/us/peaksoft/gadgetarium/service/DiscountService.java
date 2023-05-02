@@ -1,10 +1,8 @@
 package us.peaksoft.gadgetarium.service;
-
 import us.peaksoft.gadgetarium.dto.DiscountRequest;
 import us.peaksoft.gadgetarium.dto.DiscountResponse;
 import us.peaksoft.gadgetarium.dto.ProductResponse;
 import us.peaksoft.gadgetarium.dto.SimpleResponse;
-
 import java.util.List;
 
 public interface DiscountService {

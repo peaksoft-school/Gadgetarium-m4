@@ -1,9 +1,7 @@
 package us.peaksoft.gadgetarium.service.impl;
-
 import us.peaksoft.gadgetarium.dto.ContactRequest;
 import us.peaksoft.gadgetarium.service.ContactService;
 import org.springframework.stereotype.Service;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
