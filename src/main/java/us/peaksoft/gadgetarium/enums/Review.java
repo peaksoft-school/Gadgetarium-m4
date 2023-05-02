@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public enum Review {
+
     DELIVERY_VARIETIES("DELIVERY_VARIETIES"), PAYMENT("PAYMENT"), ORDER_REVIEW("ORDER_REVIEW");
     private String stringType;
 

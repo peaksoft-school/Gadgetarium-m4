@@ -1,8 +1,14 @@
-INSERT INTO address(city_name, country_name, postal_code, state_name, street_name)
-VALUES ('Moscow', 'Russia', '12321', 'MO', 'Arbatsckaya');
-
 INSERT INTO wishlist(id)
 VALUES (1);
+
+INSERT INTO review(id, order_review)
+VALUES (1,'DELIVERY_VARIETIES');
+
+INSERT INTO review(id, order_review)
+VALUES (2,'PAYMENT');
+
+INSERT INTO review(id, order_review)
+VALUES (3, 'ORDER_REVIEW');
 
 INSERT INTO order_list(id)
 VALUES (1);
@@ -35,8 +41,8 @@ VALUES ('admin@gmail.com', 'Admin', 'Adminov', '$2a$12$zUO1dmnQw.y5asgrJyiNj.TtP
 
 INSERT INTO orders(id, count_of_product, order_status,
                    shipping, total_sum,
-                   type_payment, delivery_man_id, user_id)
-VALUES (1, 105, 'CREATED', 'dsk', 12000, 'card', 1, 1);
+                   type_payment, delivery_man_id, user_id, order_review_status)
+VALUES (1, 105, 'CREATED', 'dsk', 12000, 'card', 1, 1, 1);
 
 INSERT INTO products(id, appointment, brand,
                      capacity_battery, color, price,

@@ -6,5 +6,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public enum PaymentType {
+
     CART, CART_BY_HOME, CASH
 }
