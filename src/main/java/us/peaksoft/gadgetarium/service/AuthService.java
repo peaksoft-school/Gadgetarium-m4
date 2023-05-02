@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.AuthenticationRequest;
 import us.peaksoft.gadgetarium.dto.AuthenticationResponse;
 import us.peaksoft.gadgetarium.entity.Basket;
-import us.peaksoft.gadgetarium.entity.Chosen;
 import us.peaksoft.gadgetarium.entity.User;
 import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.dto.RegisterRequest;
 import us.peaksoft.gadgetarium.enums.Role;
 import us.peaksoft.gadgetarium.security.JwtService;
 import java.time.LocalDate;
+import us.peaksoft.gadgetarium.entity.Wishlist;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -22,8 +22,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService tokenUtil;
-    private final ChosenService chosenService;
-    private final BasketRepository basketRepository;
+//    private final ChosenService chosenService;
+//    private final BasketRepository basketRepository;
 
     public AuthenticationResponse view(String token, String message, User user) {
         AuthenticationResponse response = new AuthenticationResponse();
@@ -69,16 +69,15 @@ public class AuthService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         User user = mapToEntity(request);
-        Chosen chosen = new Chosen();
-        chosen.setUser(user);
-        user.setChosen(chosen);
+        Wishlist wishlist = new Wishlist();
+        wishlist.setUser(user);
+        user.setWishlist(wishlist);
         Basket basket = new Basket();
         basket.setUser(user);
         user.setBasket(basket);
         userRepository.save(user);
         return responseForRegister(user);
     }
-
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
         authenticationManager.authenticate(token);

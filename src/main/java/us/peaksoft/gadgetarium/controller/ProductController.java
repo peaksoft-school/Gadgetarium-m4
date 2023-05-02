@@ -47,11 +47,6 @@ public class ProductController {
         return productService.save(productRequest);
     }
 
-    @PostMapping("contacts")
-public void contact(@RequestBody ContactRequest contact){
-        productService.sendEmail(contact);
-}
-
     @GetMapping("download/{id}")
     @Operation(description = "The method works automatically, all users can use this method")
     public ResponseEntity<InputStreamResource> PDFfile(Long id) throws IOException {
