@@ -36,4 +36,8 @@ public class Basket {
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Order order;
+
 }

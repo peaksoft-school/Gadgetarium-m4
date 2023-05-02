@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import us.peaksoft.gadgetarium.enums.OrderStatus;
+import us.peaksoft.gadgetarium.enums.PaymentType;
+import us.peaksoft.gadgetarium.enums.Shipping;
 
 import java.util.List;
 
@@ -26,16 +28,11 @@ public class Order {
     @Column(name = "total_sum")
     private int totalSum;
 
-    private String shipping;
-
-    @Column(name = "type_payment")
-    private String typePayment;
+    @Enumerated(EnumType.STRING)
+    private PaymentType typePayment;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    private List<Product> products;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -43,4 +40,15 @@ public class Order {
 
     @ManyToOne
     private DeliveryMen deliveryMan;
+
+    @ManyToOne
+    @JoinColumn(name = "order_review_status")
+    private OrderReview orderReview;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "basket_id")
+    private Basket basket;
+
+    @Enumerated(EnumType.STRING)
+    private Shipping shipping;
 }
