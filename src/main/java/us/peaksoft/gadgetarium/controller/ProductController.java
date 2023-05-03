@@ -3,13 +3,9 @@ package us.peaksoft.gadgetarium.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.bind.annotation.*;
 import us.peaksoft.gadgetarium.dto.*;
-import us.peaksoft.gadgetarium.enums.Brand;
-import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.service.ProductService;
-
 import java.util.List;
 
 @RestController

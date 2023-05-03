@@ -3,21 +3,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import us.peaksoft.gadgetarium.service.ProfileService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import us.peaksoft.gadgetarium.dto.*;
 import us.peaksoft.gadgetarium.entity.*;
-import us.peaksoft.gadgetarium.repository.UserRepository;
-import us.peaksoft.gadgetarium.repository.AddressRepository;
-import us.peaksoft.gadgetarium.security.JwtService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import us.peaksoft.gadgetarium.repository.*;
+import us.peaksoft.gadgetarium.service.ProfileService;
+
+
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
 
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
-    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
+
     private boolean checkOldPassword(String email, String oldPassword) {
         User user = userRepository.findByEmail(email).get();
         String encodedPassword = user.getPassword();
@@ -27,14 +27,10 @@ public class ProfileServiceImpl implements ProfileService {
     private String PassToHash(CharSequence password) {
         return passwordEncoder.encode(password);
     }
-    public String getAddressForUser(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
+    private String getAddressForUser(Long userId) { User user = userRepository.findById(userId).orElse(null);
         String result;
         Address address = user.getAddress();
-        if (address == null) {
-            result = "Not specified.";
-            return result;
-        }
+        if (address == null) { result = "User address not specified."; return result;}
         String country = address.getCountryName();
         String state = address.getStateName();
         String city = address.getCityName();
@@ -43,8 +39,8 @@ public class ProfileServiceImpl implements ProfileService {
         result = country+" "+state+" "+city+" "+" "+street+" "+index;
         return result;
     }
-    public SimpleResponse update(ProfileRequest profileRequest,Long id) {
-        SimpleResponse updateResponse = new SimpleResponse();
+    public SimpleResponse updateProfile(ProfileRequest profileRequest,Long id) {
+        SimpleResponse update = new SimpleResponse();
         User user = userRepository.findById(id).get();
         Address address = user.getAddress();;
         String[] words = profileRequest.getAddress().split(" ");
@@ -69,45 +65,41 @@ public class ProfileServiceImpl implements ProfileService {
         user.setEmail(profileRequest.getEmail());
         user.setPhoneNumber(profileRequest.getPhoneNumber());
         userRepository.save(user);
-        updateResponse.setHttpStatus(HttpStatus.OK);
-        updateResponse.setMessage("User Details for id["+user.getId()+"] updated");
-        return updateResponse;
+        update.setHttpStatus(HttpStatus.OK);
+        update.setMessage("Profile information for id["+user.getId()+"] updated");
+        return update;
     }
 
     public SimpleResponse changePassword (ProfileChangePasswordRequest passwordRequest, Long id) {
 
-        SimpleResponse updateResponse = new SimpleResponse();
+        SimpleResponse changed = new SimpleResponse();
         User user = userRepository.findById(id).get();
         if (!passwordRequest.getNewPassword().equals(passwordRequest.getConfirmPassword())) {
-            updateResponse.setHttpStatus(HttpStatus.NOT_MODIFIED);
-            updateResponse.setMessage("New password & Confirmation password do not match.");
-            return updateResponse;
+            changed.setHttpStatus(HttpStatus.BAD_REQUEST);
+            changed.setMessage("New password & Confirmation password do not match.");
+            return changed;
         }
         if (!checkOldPassword(user.getEmail(), passwordRequest.getOldPassword())) {
-                updateResponse.setHttpStatus(HttpStatus.NOT_MODIFIED);
-                updateResponse.setMessage("The old password was entered incorrectly.");
-                return updateResponse;
+                changed.setHttpStatus(HttpStatus.BAD_REQUEST);
+                changed.setMessage("The old password was entered incorrectly.");
+                return changed;
         }
         user.setPassword(PassToHash(passwordRequest.getNewPassword()));
         userRepository.save(user);
-        updateResponse.setHttpStatus(HttpStatus.OK);
-        updateResponse.setMessage("Password for id["+user.getId()+"] updated");
-        return updateResponse;
+        changed.setHttpStatus(HttpStatus.OK);
+        changed.setMessage("Password for id["+user.getId()+"] updated");
+        return changed;
     }
     @Override
-    public ResponseEntity<?> getById(Long id) {
+    public ResponseEntity<?> getProfile(Long id) {
 
         User user = userRepository.findById(id).get();
-        SimpleResponse response =  new SimpleResponse();
         ProfileResponse profileResponse = new ProfileResponse();
         profileResponse.setFirstName(user.getFirstName());
         profileResponse.setLastName(user.getLastName());
         profileResponse.setEmail(user.getEmail());
         profileResponse.setAddress(getAddressForUser(user.getId()));
         profileResponse.setPhoneNumber(user.getPhoneNumber());
-        response.setHttpStatus(HttpStatus.OK);
-        return ResponseEntity
-                .status(response.getHttpStatus())
-                .body(profileResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(profileResponse);
     }
 }
