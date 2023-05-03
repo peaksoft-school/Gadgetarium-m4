@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "basket")
 public class Basket {
@@ -36,4 +35,7 @@ public class Basket {
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
+
+    public Basket() {
+    }
 }
