@@ -58,6 +58,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "wishlist_id")
     private Wishlist wishlist;
 
+    @Transient
+    private Long chosenId;
+
     @OneToOne
     @JoinColumn(name = "order_list_id")
     private OrderList orderList;
