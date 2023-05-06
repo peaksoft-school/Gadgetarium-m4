@@ -1,15 +1,8 @@
 package us.peaksoft.gadgetarium;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import us.peaksoft.gadgetarium.dto.ContactRequest;
-
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 @Controller
 @SpringBootApplication

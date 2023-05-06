@@ -13,9 +13,9 @@ import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.dto.RegisterRequest;
 import us.peaksoft.gadgetarium.enums.Role;
 import us.peaksoft.gadgetarium.security.JwtService;
-
 import java.time.LocalDate;
 import us.peaksoft.gadgetarium.entity.Wishlist;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
