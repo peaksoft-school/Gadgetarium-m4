@@ -53,34 +53,35 @@ public class ProductServiceImpl implements ProductService {
         }
         return productsList;
     }
+
     @Override
     public File file(Long id) throws IOException {
         File file =new File("Info.pdf");
         FileWriter writer = new FileWriter("Info.pdf");
 
         Product product = productRepository.findById(id).get();
-        writer.write("Product name: " + product.getName() + "                    ");
-        writer.write("Product brand: " + product.getBrand() + "                    ");
-        writer.write("Product color: " + product.getColor() + "                    ");
-        writer.write("Product price: " + product.getPrice() + "                    ");
-        writer.write("Date of issue: " + product.getDateOfIssue() + "                    ");
-        writer.write("Product os: " + product.getOs() + "                    ");
-        writer.write("Product ram: " + product.getRam() + "                    ");
-        writer.write("Product sim: " + product.getSim() + "                    ");
-        writer.write("Product rom: " + product.getRom() + "                    ");
-        writer.write("Product cpu: " + product.getCpu() + "                    ");
-        writer.write("Product appointment: " + product.getAppointment() + "                    ");
-        writer.write("Product capacity battery: " + product.getCapacityBattery() + "                    ");
-        writer.write("Product guarantee: " + product.getGuarantee() + "                    ");
-        writer.write("Product description: " + product.getDisplayInch() + "                    ");
-        writer.write("Product image: " + product.getImage() + "                    ");
-        writer.write("Product quantity of similar: " + product.getQuantityOfSim() + "                    ");
-        writer.write("Product weight: " + product.getWeight() + "                    ");
-        writer.write("Product category: " + product.getCategory() + "                    ");
+        writer.write("Product name: " + product.getName() + "\n");
+        writer.write("Product brand: " + product.getBrand() + "\n");
+        writer.write("Product color: " + product.getColor() +"\n");
+        writer.write("Product price: " + product.getPrice() +"\n" );
+        writer.write("Date of issue: " + product.getDateOfIssue() +"\n" );
+        writer.write("Product os: " + product.getOs() +"\n" );
+        writer.write("Product ram: " + product.getRam() +"\n" );
+        writer.write("Product sim: " + product.getSim() +"\n" );
+        writer.write("Product rom: " + product.getRom() + "\n");
+        writer.write("Product cpu: " + product.getCpu() + "\n");
+        writer.write("Product appointment: " + product.getAppointment() +"\n");
+        writer.write("Product capacity battery: " + product.getCapacityBattery() +"\n");
+        writer.write("Product guarantee: " + product.getGuarantee() +"\n");
+        writer.write("Product description: " + product.getDisplayInch() +"\n");
+        writer.write("Product image: " + product.getImage() +"\n");
+        writer.write("Product quantity of similar: " + product.getQuantityOfSim() +"\n");
+        writer.write("Product weight: " + product.getWeight() +"\n");
+        writer.write("Product category: " + product.getCategory() +"\n");
         writer.close();
-
         return file;
     }
+
     @Override
     public ProductResponse save(ProductRequest productRequest) {
         Product product = mapToEntity(productRequest);

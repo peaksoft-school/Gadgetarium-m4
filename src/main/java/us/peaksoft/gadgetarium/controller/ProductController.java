@@ -3,17 +3,13 @@ package us.peaksoft.gadgetarium.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import us.peaksoft.gadgetarium.dto.*;
-import us.peaksoft.gadgetarium.enums.Brand;
-import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.service.ProductService;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,7 +43,6 @@ public class ProductController {
         return productService.save(productRequest);
     }
 
-
     @GetMapping("/download/{id}")
     @Operation(description = "The method works automatically, all users can use this method")
     public ResponseEntity<InputStreamResource> PDFfile(Long id) throws IOException {
@@ -65,6 +60,7 @@ public class ProductController {
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
     }
+
     @Operation(description = "Only admin can add a price to product")
     @PostMapping("save-price/{id}")
     public ProductResponse savePrice(@PathVariable("id") Long id,
