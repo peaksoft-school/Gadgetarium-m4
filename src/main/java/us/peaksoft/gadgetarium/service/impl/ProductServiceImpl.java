@@ -74,6 +74,9 @@ public class ProductServiceImpl implements ProductService {
                 product.setDisPercent(product.getDiscount().getPercent());
             }
         }
+        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
+                product.getColor(), product.getRam(),
+                product.getQuantityOfSim(), product.getPrice()));
         productRepository.save(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
 
@@ -245,10 +248,7 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
         productResponse.setPDF(product.getPDF());
-        productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
-        productResponse.setCurrentPrice(product.getCurrentPrice());
+        productResponse.setQuantityOfProducts(product.getQuantityOfProducts());
         if (product.getBasket() != null) {
             productResponse.setInBasket(true);
         } else {
@@ -267,9 +267,7 @@ public class ProductServiceImpl implements ProductService {
         productDetailsResponse.setRam(product.getRam());
         productDetailsResponse.setRom(product.getRom());
         productDetailsResponse.setPrice(product.getPrice());
-        productDetailsResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
+        productDetailsResponse.setQuantityOfProducts(product.getQuantityOfProducts());
         return productDetailsResponse;
     }
 }
