@@ -23,16 +23,24 @@ public class Basket {
     private List<Product> products;
 
     @Column(name = "sum")
-    private int sum;
+    private Integer sum;
 
     @Column(name = "discounted_difference")
-    private int disPercentSum;
+    private Integer disPercentSum;
+
+    public int getDisPercentSum() {
+        return disPercentSum;
+    }
+
+    public void setDisPercentSum(int disPercentSum) {
+        this.disPercentSum = disPercentSum;
+    }
 
     @Column(name = "quantity_of_products")
-    private int quantityOfProducts;
+    private Integer quantityOfProducts;
 
     @Column(name = "end_sum")
-    private int endSum;
+    private Integer endSum;
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user;

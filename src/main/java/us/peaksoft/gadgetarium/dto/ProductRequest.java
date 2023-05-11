@@ -30,7 +30,6 @@ public class ProductRequest {
     private String appointment;
     private String capacityBattery;
     private String image;
-    private String PDF;
     private String description;
     private Long categoryId;
     private Long discountId;

@@ -12,11 +12,15 @@ import us.peaksoft.gadgetarium.dto.AuthenticationResponse;
 import us.peaksoft.gadgetarium.dto.RegisterRequest;
 import us.peaksoft.gadgetarium.service.AuthService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("api/public")
 @Tag(name = "AuthController", description = "API endpoints for managing authentication")
 @RequiredArgsConstructor
 public class AuthController {
+List list=new ArrayList();
 
     private final AuthService authService;
 
