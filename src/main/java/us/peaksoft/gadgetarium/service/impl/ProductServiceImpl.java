@@ -254,6 +254,7 @@ public class ProductServiceImpl implements ProductService {
         } else {
             productResponse.setInBasket(false);
         }
+        productResponse.setCurrentPrice(product.getCurrentPrice());
         return productResponse;
     }
 

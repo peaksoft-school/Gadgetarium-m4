@@ -177,9 +177,7 @@ public class BasketServiceImpl implements BasketService {
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
         productResponse.setPDF(product.getPDF());
-        productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
+        productResponse.setQuantityOfProducts(product.getQuantityOfProducts());
         productResponse.setCurrentPrice(product.getCurrentPrice());
         if (product.getBasket() != null) {
             productResponse.setInBasket(true);

@@ -107,9 +107,7 @@ public class WishlistServiceImpl implements WishlistService {
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
         productResponse.setPDF(product.getPDF());
-        productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
+        productResponse.setQuantityOfProducts(product.getQuantityOfProducts());
         productResponse.setDisPercent(product.getDiscount().getPercent());
         double disPer = (double) product.getDiscount().getPercent() / 100;
         double disPrice = product.getPrice() * disPer;
