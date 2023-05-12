@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import us.peaksoft.gadgetarium.dto.OrderRequest;
 import us.peaksoft.gadgetarium.dto.OrderResponse;
 import us.peaksoft.gadgetarium.dto.OrderResponseForVarietyOfDelivery;
-import us.peaksoft.gadgetarium.entity.*;
+import us.peaksoft.gadgetarium.entity.Address;
+import us.peaksoft.gadgetarium.entity.Basket;
+import us.peaksoft.gadgetarium.entity.Order;
+import us.peaksoft.gadgetarium.entity.OrderReview;
+import us.peaksoft.gadgetarium.entity.User;
 import us.peaksoft.gadgetarium.enums.OrderStatus;
 import us.peaksoft.gadgetarium.enums.Shipping;
 import us.peaksoft.gadgetarium.repository.BasketRepository;
@@ -48,11 +52,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse savePayment(Long id, String orderReview, Long basketId, OrderRequest orderRequest) {
+    public OrderResponse savePayment(Long id, String orderReview, OrderRequest orderRequest) {
         Order order = orderRepository.findById(id).get();
         OrderReview orderReviewEntity = orderReviewEntityRepository.findByOrderReview(orderReview).get();
         order.setOrderReview(orderReviewEntity);
-        return null;
+        order.setTypePayment(null);
+        orderRepository.save(order);
+        return mapToResponse(order);
     }
 
     @Override

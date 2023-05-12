@@ -1,6 +1,17 @@
 package us.peaksoft.gadgetarium.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +20,10 @@ import us.peaksoft.gadgetarium.enums.OrderStatus;
 import us.peaksoft.gadgetarium.enums.PaymentType;
 import us.peaksoft.gadgetarium.enums.Shipping;
 
-import java.util.List;
 
-@Getter
 @Setter
 @NoArgsConstructor
+@Getter
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")

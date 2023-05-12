@@ -1,14 +1,14 @@
-INSERT INTO wishlist(id)
-VALUES (1);
-
-INSERT INTO review(id, order_review)
+INSERT INTO order_review(id, review)
 VALUES (1,'DELIVERY_VARIETIES');
 
-INSERT INTO review(id, order_review)
+INSERT INTO order_review(id, review)
 VALUES (2,'PAYMENT');
 
-INSERT INTO review(id, order_review)
+INSERT INTO order_review(id, review)
 VALUES (3, 'ORDER_REVIEW');
+
+INSERT INTO wishlist(id)
+VALUES (1);
 
 INSERT INTO order_list(id)
 VALUES (1);
@@ -52,7 +52,7 @@ INSERT INTO products(id, appointment, brand,
                      ram, rom,
                      sim, weight,
                      basket_id,
-                      wishlist_id,
+                     wishlist_id,
                      discount_id,
                      news_id, order_list_id, promotion_id, category_id)
 VALUES (1, 'phone', 'ASUS', '128GB', 'RED', 45000, 'DWQ2', '01-02-2024',

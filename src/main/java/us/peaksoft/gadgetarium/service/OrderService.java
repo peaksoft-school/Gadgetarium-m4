@@ -8,7 +8,7 @@ public interface OrderService {
 
     OrderResponseForVarietyOfDelivery saveMain(String orderReview, Long basketId, OrderRequest orderRequest);
 
-    OrderResponse savePayment(Long id, String orderReview, Long basketId, OrderRequest orderRequest);
+    OrderResponse savePayment(Long id, String orderReview, OrderRequest orderRequest);
 
     OrderResponse saveOrderReview(Long id, String orderReview);
 }
