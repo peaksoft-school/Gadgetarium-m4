@@ -1,18 +1,11 @@
 package us.peaksoft.gadgetarium.service_test;
 
-import org.junit.jupiter.api.BeforeAll;
-
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import us.peaksoft.gadgetarium.entity.Basket;
-import us.peaksoft.gadgetarium.entity.Category;
-import us.peaksoft.gadgetarium.entity.Discount;
 import us.peaksoft.gadgetarium.entity.Product;
-import us.peaksoft.gadgetarium.enums.Subcat;
 import us.peaksoft.gadgetarium.repository.BasketRepository;
 import us.peaksoft.gadgetarium.repository.CategoryRepository;
 import us.peaksoft.gadgetarium.repository.DiscountRepository;
@@ -23,16 +16,16 @@ import us.peaksoft.gadgetarium.service.impl.ProductServiceImpl;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(properties = {"spring.datasource.password=bektur97@",
-"spring.datasource.url=jdbc:postgresql://localhost:5432/postgres",
-"spring.datasource.username=postgres", "spring.jpa.hibernate.ddl-auto=create",
-"spring.jpa.show-sql=true", "cloud.aws.credentials.access-key=AKIA2HDIMUN7XHVDGAXA",
-"cloud.aws.credentials.secret-key=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",
-"cloud.aws.region.static=eu-central-1", "application.bucket.name=gadgetarium-m4"})
+        "spring.datasource.url=jdbc:postgresql://localhost:5432/postgres",
+        "spring.datasource.username=postgres", "spring.jpa.hibernate.ddl-auto=create",
+        "spring.jpa.show-sql=true", "cloud.aws.credentials.access-key=AKIA2HDIMUN7XHVDGAXA",
+        "cloud.aws.credentials.secret-key=/wmqjBqv8QwBDVjh0nq+pUA3Hc91A+RH8LQAs0i9",
+        "cloud.aws.region.static=eu-central-1", "application.bucket.name=gadgetarium-m4"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductServiceTest {
@@ -47,30 +40,6 @@ public class ProductServiceTest {
 
     @Autowired
     DiscountRepository discountRepository;
-
-    @BeforeAll
-    public void beforeAll() {
-        Basket basket = new Basket();
-        basket.setId(2l);
-        basket.setSum(23);
-        basket.setEndSum(23);
-        basket.setQuantityOfProducts(344);
-        basket.setDisPercentSum(22);
-        basketRepository.save(basket);
-
-        Category category = new Category();
-        category.setId(2l);
-        category.setName("Laptop");
-        category.setSubcat(Subcat.LAPTOPS);
-        categoryRepository.save(category);
-
-        Discount discount = new Discount();
-        discount.setId(2l);
-        discount.setPercent(15);
-        discount.setDateOfFinish(LocalDate.of(2023, 3, 28));
-        discount.setDateOfStart(LocalDate.of(2023, 4, 20));
-        discountRepository.save(discount);
-    }
 
     @Test
     public void testDownloadFile() throws IOException {
