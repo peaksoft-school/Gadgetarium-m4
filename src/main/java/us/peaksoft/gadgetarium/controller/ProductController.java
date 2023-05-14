@@ -43,7 +43,7 @@ public class ProductController {
         return productService.save(productRequest);
     }
 
-    @GetMapping("/download/{id}")
+    @GetMapping("download/{id}")
     @Operation(description = "The method works automatically, all users can use this method")
     public ResponseEntity<InputStreamResource> PDFfile(Long id) throws IOException {
         File file=productService.file(id);
