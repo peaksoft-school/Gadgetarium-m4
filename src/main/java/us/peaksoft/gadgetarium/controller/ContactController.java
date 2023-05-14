@@ -11,7 +11,7 @@ import us.peaksoft.gadgetarium.service.ContactService;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "ContactController", description = "Connection between users and programmist")
+@Tag(name = "ContactController", description = "All users can send email to Gadgetarium")
 @RequestMapping("api/contacts")
 public class ContactController {
     private final ContactService contactService;
