@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class ProfileChangePasswordRequest {
+
     private String oldPassword;
     private String NewPassword;
     private String ConfirmPassword;

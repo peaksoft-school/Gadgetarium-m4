@@ -14,13 +14,15 @@ import us.peaksoft.gadgetarium.repository.UserRepository;
 import us.peaksoft.gadgetarium.service.ProfileService;
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/public/profile")
+@RequestMapping("api/profile")
 @Tag(name = "ProfileController", description = "API endpoints for managing profile")
+@RequiredArgsConstructor
 public class ProfileController {
 
     private final UserRepository userRepository;
+
     private final JwtService jwtService;
+
     private final ProfileService profileService;
 
     @Operation (description = "Get all Profile Information for setting")

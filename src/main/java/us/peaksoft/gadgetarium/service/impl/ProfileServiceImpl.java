@@ -10,7 +10,6 @@ import us.peaksoft.gadgetarium.exception.NotFoundException;
 import us.peaksoft.gadgetarium.repository.*;
 import us.peaksoft.gadgetarium.service.ProfileService;
 
-
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
@@ -28,6 +27,7 @@ public class ProfileServiceImpl implements ProfileService {
     private String PassToHash(CharSequence password) {
         return passwordEncoder.encode(password);
     }
+
     private String getAddressForUser(Long userId) { User user = userRepository.findById(userId).orElse(null);
         String result;
         assert user != null;
@@ -41,6 +41,7 @@ public class ProfileServiceImpl implements ProfileService {
         result = country+" "+state+" "+city+" "+" "+street+" "+index;
         return result;
     }
+
     public SimpleResponse updateProfile(ProfileRequest profileRequest,Long id) {
         SimpleResponse update = new SimpleResponse();
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
@@ -51,7 +52,6 @@ public class ProfileServiceImpl implements ProfileService {
         String city = words[2];
         String street = words[3];
         String index = words[4];
-
         Address updatedAddress = address == null ? new Address() : address;
         updatedAddress.setCountryName(country);
         updatedAddress.setStateName(state);
@@ -73,7 +73,6 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     public SimpleResponse changePassword (ProfileChangePasswordRequest passwordRequest, Long id) {
-
         SimpleResponse changed = new SimpleResponse();
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
         if (!passwordRequest.getNewPassword().equals(passwordRequest.getConfirmPassword())) {
@@ -92,9 +91,9 @@ public class ProfileServiceImpl implements ProfileService {
         changed.setMessage("Password for id["+user.getId()+"] updated");
         return changed;
     }
+
     @Override
     public ResponseEntity<?> getProfile(Long id) {
-
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
         ProfileResponse profileResponse = new ProfileResponse();
         profileResponse.setFirstName(user.getFirstName());

@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class ProfileRequest {
+
     private String firstName;
     private String lastName;
     private String email;
