@@ -132,6 +132,8 @@ public class DiscountServiceImpl implements DiscountService {
         double disPrice = product.getPrice() * disPer;
         int discountedPrice = (int) (product.getPrice() - disPrice);
         productResponse.setCurrentPrice(discountedPrice);
+        productResponse.setDisPercent(product.getDisPercent());
+        productResponse.setCategoryName(product.getCategory().getName());
         return productResponse;
     }
 }

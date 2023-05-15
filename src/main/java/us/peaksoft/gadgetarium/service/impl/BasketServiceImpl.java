@@ -178,12 +178,14 @@ public class BasketServiceImpl implements BasketService {
         productResponse.setDescription(product.getDescription());
         productResponse.setPDF(product.getPDF());
         productResponse.setQuantityOfProducts(product.getQuantityOfProducts());
+        productResponse.setDisPercent(product.getDisPercent());
         productResponse.setCurrentPrice(product.getCurrentPrice());
         if (product.getBasket() != null) {
             productResponse.setInBasket(true);
         } else {
             productResponse.setInBasket(false);
         }
+        productResponse.setCategoryName(product.getCategory().getName());
         return productResponse;
     }
 }
