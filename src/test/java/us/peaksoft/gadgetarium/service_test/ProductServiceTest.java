@@ -78,6 +78,7 @@ public class ProductServiceTest {
 
         assertEquals(fileContext1, fileContext2);
         assertNotEquals(null, fileContext2);
+        assertTrue(file2.exists());
 
         file.delete();
     }
