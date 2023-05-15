@@ -15,10 +15,12 @@ import us.peaksoft.gadgetarium.service.ComparisonService;
 
 @Service
 @RequiredArgsConstructor
+
 public class ComparisonServiceImpl implements ComparisonService {
 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+
     private final List<ComparisonResponse> smartphonesList = new ArrayList<>();
     private final List<ComparisonResponse> tabletList = new ArrayList<>();
     private final List<ComparisonResponse> laptopList = new ArrayList<>();

@@ -9,6 +9,7 @@ import us.peaksoft.gadgetarium.dto.ComparisonResponse;
 import us.peaksoft.gadgetarium.enums.Subcat;
 
 public interface ComparisonService {
+
     ResponseEntity<String> addToComparison(@RequestBody Long id);
 
     List<ComparisonResponse> getComparisonListBySubCategory(@PathVariable Subcat subcat);
