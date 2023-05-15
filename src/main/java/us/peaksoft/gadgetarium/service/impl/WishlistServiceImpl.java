@@ -106,7 +106,7 @@ public class WishlistServiceImpl implements WishlistService {
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-        productResponse.setPDF(product.getPDF());
+
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
