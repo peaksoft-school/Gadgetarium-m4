@@ -74,6 +74,9 @@ public class ProductServiceImpl implements ProductService {
                 product.setDisPercent(product.getDiscount().getPercent());
             }
         }
+        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
+                product.getColor(), product.getRam(),
+                product.getQuantityOfSim(), product.getPrice()));
         productRepository.save(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
 
@@ -113,9 +116,24 @@ public class ProductServiceImpl implements ProductService {
             Category category = categoryRepository.findById(productRequest.getCategoryId()).get();
             product.setCategory(category);
         }
+        if (productRequest.getDiscountId() != null) {
+            Discount discount = discountRepository.findById(productRequest.getDiscountId()).get();
+            product.setDiscount(discount);
+            product.setDisPercent(discount.getPercent());
+            if (product.getDiscount().getId() != null) {
+                double disPer = (double) product.getDiscount().getPercent() / 100;
+                double disPrice = product.getPrice() * disPer;
+                int discountedPrice = (int) (product.getPrice() - disPrice);
+                product.setCurrentPrice(discountedPrice);
+                product.setDisPercent(product.getDiscount().getPercent());
+            }
+        }
+        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
+                product.getColor(), product.getRam(),
+                product.getQuantityOfSim(), product.getPrice()));
         product.setPDF(productRequest.getPDF());
         product.setDescription(productRequest.getDescription());
-        productRepository.saveAndFlush(product);
+        productRepository.save(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
     }
 
@@ -220,6 +238,8 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
+        productResponse.setDisPercent(product.getDisPercent());
+        productResponse.setCategoryName(product.getCategory().getName());
         return productResponse;
     }
 
@@ -248,12 +268,14 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
-        productResponse.setCurrentPrice(product.getCurrentPrice());
         if (product.getBasket() != null) {
             productResponse.setInBasket(true);
         } else {
             productResponse.setInBasket(false);
         }
+        productResponse.setCurrentPrice(product.getCurrentPrice());
+        productResponse.setDisPercent(product.getDisPercent());
+        productResponse.setCategoryName(product.getCategory().getName());
         return productResponse;
     }
 
@@ -267,9 +289,7 @@ public class ProductServiceImpl implements ProductService {
         productDetailsResponse.setRam(product.getRam());
         productDetailsResponse.setRom(product.getRom());
         productDetailsResponse.setPrice(product.getPrice());
-        productDetailsResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
+        productDetailsResponse.setQuantityOfProducts(product.getQuantityOfProducts());
         return productDetailsResponse;
     }
 }
