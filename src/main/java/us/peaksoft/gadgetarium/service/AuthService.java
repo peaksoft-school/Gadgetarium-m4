@@ -2,6 +2,7 @@ package us.peaksoft.gadgetarium.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,10 @@ public class AuthService {
     }
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if(userRepository.existsByEmail(request.getEmail())){
+            throw new BadCredentialsException("User with email: "+request.getEmail()+" aready exists.");
+        }
+        else{
         User user = mapToEntity(request);
         Wishlist wishlist = new Wishlist();
         wishlist.setUser(user);
@@ -76,7 +81,7 @@ public class AuthService {
         user.setBasket(basket);
         userRepository.save(user);
         return responseForRegister(user);
-    }
+    }}
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
