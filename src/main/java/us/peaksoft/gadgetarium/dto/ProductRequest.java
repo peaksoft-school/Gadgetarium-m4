@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.io.File;
 import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
@@ -22,6 +23,7 @@ public class ProductRequest {
     private String ram;
     private String rom;
     private String sim;
+    private File PDF;
     private Long quantityOfSim;
     private String cpu;
     private String weight;

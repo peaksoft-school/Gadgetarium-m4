@@ -6,6 +6,7 @@ import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
 
+import java.io.File;
 import java.util.List;
 
 @AllArgsConstructor
@@ -53,11 +54,14 @@ public class Product {
 
     private String image;
 
+    private File PDF;
+
     private String displayInch;
 
     private String appointment;
 
     private String description;
+    private Long quantityOfProducts;
 
     @Column(name = "capacity_battery")
     private String capacityBattery;
