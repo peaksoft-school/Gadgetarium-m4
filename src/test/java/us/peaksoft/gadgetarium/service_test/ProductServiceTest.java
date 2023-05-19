@@ -20,8 +20,8 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(properties = {"spring.datasource.password=bektur97@",
-        "spring.datasource.url=jdbc:postgresql://localhost:5432/postgres",
+@SpringBootTest(properties = {"spring.datasource.password=postgres",
+        "spring.datasource.url=jdbc:postgresql://localhost:5432/gadgetarium",
         "spring.datasource.username=postgres", "spring.jpa.hibernate.ddl-auto=create",
         "spring.jpa.show-sql=true", "cloud.aws.credentials.access-key=AKIA2HDIMUN7XHVDGAXA",
         "cloud.aws.credentials.secret-key=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",

@@ -10,6 +10,7 @@ import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
 
+import java.io.File;
 import java.util.List;
 
 @Getter
@@ -48,6 +49,9 @@ public class ProductResponse {
     private String guarantee;
 
     private String image;
+
+    private File PDF;
+
 
     private String displayInch;
 

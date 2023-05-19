@@ -176,15 +176,16 @@ public class BasketServiceImpl implements BasketService {
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-        productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
+        productResponse.setPDF(product.getPDF());
+        productResponse.setQuantityOfProducts(product.getQuantityOfProducts());
+        productResponse.setDisPercent(product.getDisPercent());
         productResponse.setCurrentPrice(product.getCurrentPrice());
         if (product.getBasket() != null) {
             productResponse.setInBasket(true);
         } else {
             productResponse.setInBasket(false);
         }
+        productResponse.setCategoryName(product.getCategory().getName());
         return productResponse;
     }
 }

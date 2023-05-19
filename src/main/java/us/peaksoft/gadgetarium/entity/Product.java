@@ -1,12 +1,11 @@
 package us.peaksoft.gadgetarium.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
-
+import java.io.File;
 import java.util.List;
 
 @AllArgsConstructor
@@ -39,26 +38,18 @@ public class Product {
     private OS os;
 
     private String ram;
-
     private String rom;
-
     private String sim;
-
     private Long quantityOfSim;
-
     private String cpu;
-
     private String weight;
-
     private String guarantee;
-
     private String image;
-
     private String displayInch;
-
     private String appointment;
-
+    private File PDF;
     private String description;
+    private Long quantityOfProducts;
 
     @Column(name = "capacity_battery")
     private String capacityBattery;
