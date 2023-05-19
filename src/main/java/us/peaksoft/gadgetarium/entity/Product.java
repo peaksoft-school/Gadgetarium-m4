@@ -6,6 +6,7 @@ import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
 
+import java.io.File;
 import java.util.List;
 
 @AllArgsConstructor
@@ -49,6 +50,7 @@ public class Product {
 
     private String weight;
 
+    private File PDF;
     private String guarantee;
 
     private String image;

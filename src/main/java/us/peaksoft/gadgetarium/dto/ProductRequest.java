@@ -8,6 +8,8 @@ import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
 
+import java.io.File;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,6 +32,7 @@ public class ProductRequest {
     private String appointment;
     private String capacityBattery;
     private String image;
+    private File PDF;
     private String description;
     private Long categoryId;
     private Long discountId;
