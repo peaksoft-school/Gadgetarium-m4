@@ -68,6 +68,7 @@ public class User implements UserDetails {
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
     @OneToOne
     @JoinColumn(name = "payments_id")
     private Payments payments;

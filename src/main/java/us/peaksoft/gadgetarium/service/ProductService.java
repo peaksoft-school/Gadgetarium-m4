@@ -1,13 +1,7 @@
 package us.peaksoft.gadgetarium.service;
-
-import us.peaksoft.gadgetarium.dto.ProductDetailsResponse;
-import us.peaksoft.gadgetarium.dto.SimpleResponse;
-import us.peaksoft.gadgetarium.dto.ProductRequest;
-import us.peaksoft.gadgetarium.dto.ProductResponse;
-import us.peaksoft.gadgetarium.enums.Brand;
-import us.peaksoft.gadgetarium.enums.Color;
-
-
+import us.peaksoft.gadgetarium.dto.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
