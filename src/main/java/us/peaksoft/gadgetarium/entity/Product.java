@@ -58,6 +58,7 @@ public class Product {
     private String appointment;
 
     private String description;
+    private Long quantityOfProducts;
 
     @Column(name = "capacity_battery")
     private String capacityBattery;

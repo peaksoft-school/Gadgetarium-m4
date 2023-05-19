@@ -5,7 +5,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import us.peaksoft.gadgetarium.dto.*;
+import us.peaksoft.gadgetarium.dto.ProductDetailsResponse;
+import us.peaksoft.gadgetarium.dto.ProductRequest;
+import us.peaksoft.gadgetarium.dto.ProductResponse;
+import us.peaksoft.gadgetarium.dto.SimpleResponse;
 import us.peaksoft.gadgetarium.entity.Category;
 import us.peaksoft.gadgetarium.entity.Discount;
 import us.peaksoft.gadgetarium.entity.Product;
@@ -51,35 +54,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public File file(Long id) throws IOException {
-        File file = new File("Info.pdf");
-        FileWriter writer = new FileWriter("Info.pdf");
-
-        Product product = productRepository.findById(id).get();
-        writer.write("Product name: " + product.getName() + "\n");
-        writer.write("Product brand: " + product.getBrand() + "\n");
-        writer.write("Product color: " + product.getColor() + "\n");
-        writer.write("Product price: " + product.getPrice() + "\n");
-        writer.write("Date of issue: " + product.getDateOfIssue() + "\n");
-        writer.write("Product os: " + product.getOs() + "\n");
-        writer.write("Product ram: " + product.getRam() + "\n");
-        writer.write("Product sim: " + product.getSim() + "\n");
-        writer.write("Product rom: " + product.getRom() + "\n");
-        writer.write("Product cpu: " + product.getCpu() + "\n");
-        writer.write("Product appointment: " + product.getAppointment() + "\n");
-        writer.write("Product capacity battery: " + product.getCapacityBattery() + "\n");
-        writer.write("Product guarantee: " + product.getGuarantee() + "\n");
-        writer.write("Product description: " + product.getDisplayInch() + "\n");
-        writer.write("Product image: " + product.getImage() + "\n");
-        writer.write("Product quantity of similar: " + product.getQuantityOfSim() + "\n");
-        writer.write("Product weight: " + product.getWeight() + "\n");
-        writer.write("Product category: " + product.getCategory() + "\n");
-        writer.close();
-
-        return file;
-    }
-
-    @Override
     public ProductResponse save(ProductRequest productRequest) {
         Product product = mapToEntity(productRequest);
         productRepository.save(product);
@@ -102,13 +76,18 @@ public class ProductServiceImpl implements ProductService {
                 product.setDisPercent(product.getDiscount().getPercent());
             }
         }
+        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
+                product.getColor(), product.getRam(),
+                product.getQuantityOfSim(), product.getPrice()));
         productRepository.save(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
+
     }
 
     @Override
     public ProductResponse saveDescription(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id).get();
+        product.setPDF(productRequest.getPDF());
         product.setImage(productRequest.getImage());
         product.setDescription(productRequest.getDescription());
         productRepository.save(product);
@@ -139,8 +118,24 @@ public class ProductServiceImpl implements ProductService {
             Category category = categoryRepository.findById(productRequest.getCategoryId()).get();
             product.setCategory(category);
         }
+        if (productRequest.getDiscountId() != null) {
+            Discount discount = discountRepository.findById(productRequest.getDiscountId()).get();
+            product.setDiscount(discount);
+            product.setDisPercent(discount.getPercent());
+            if (product.getDiscount().getId() != null) {
+                double disPer = (double) product.getDiscount().getPercent() / 100;
+                double disPrice = product.getPrice() * disPer;
+                int discountedPrice = (int) (product.getPrice() - disPrice);
+                product.setCurrentPrice(discountedPrice);
+                product.setDisPercent(product.getDiscount().getPercent());
+            }
+        }
+        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
+                product.getColor(), product.getRam(),
+                product.getQuantityOfSim(), product.getPrice()));
+        product.setPDF(productRequest.getPDF());
         product.setDescription(productRequest.getDescription());
-        productRepository.saveAndFlush(product);
+        productRepository.save(product);
         return mapToResponseForDescriptionAndSavingPrice(product);
     }
 
@@ -241,10 +236,12 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
-
+        productResponse.setPDF(product.getPDF());
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
+        productResponse.setDisPercent(product.getDisPercent());
+        productResponse.setCategoryName(product.getCategory().getName());
         return productResponse;
     }
 
@@ -269,15 +266,18 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setAppointment(product.getAppointment());
         productResponse.setCapacityBattery(product.getCapacityBattery());
         productResponse.setDescription(product.getDescription());
+        productResponse.setPDF(product.getPDF());
         productResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
                 product.getColor(), product.getRam(),
                 product.getQuantityOfSim(), product.getPrice()));
-        productResponse.setCurrentPrice(product.getCurrentPrice());
         if (product.getBasket() != null) {
             productResponse.setInBasket(true);
         } else {
             productResponse.setInBasket(false);
         }
+        productResponse.setCurrentPrice(product.getCurrentPrice());
+        productResponse.setDisPercent(product.getDisPercent());
+        productResponse.setCategoryName(product.getCategory().getName());
         return productResponse;
     }
 
@@ -291,9 +291,7 @@ public class ProductServiceImpl implements ProductService {
         productDetailsResponse.setRam(product.getRam());
         productDetailsResponse.setRom(product.getRom());
         productDetailsResponse.setPrice(product.getPrice());
-        productDetailsResponse.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
+        productDetailsResponse.setQuantityOfProducts(product.getQuantityOfProducts());
         return productDetailsResponse;
     }
 }
