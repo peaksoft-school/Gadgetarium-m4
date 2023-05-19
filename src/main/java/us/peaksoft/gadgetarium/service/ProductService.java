@@ -28,7 +28,6 @@ public interface ProductService {
 
     ProductResponse update(Long id, ProductRequest productRequest);
 
-
     ProductResponse getById(Long id);
 
     SimpleResponse delete(Long id);

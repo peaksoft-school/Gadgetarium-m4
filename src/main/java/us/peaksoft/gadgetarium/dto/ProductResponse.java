@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import us.peaksoft.gadgetarium.entity.Category;
-import us.peaksoft.gadgetarium.entity.Discount;
 import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
 
-import java.util.List;
+import java.io.File;
 
 @Getter
 @Setter
@@ -18,49 +16,28 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductResponse {
     private Long id;
-
     private String name;
-
     private int price;
-
     private double currentPrice;
-
     private Brand brand;
-
     private Color color;
-
     private String dateOfIssue;
-
     private OS os;
-
     private String ram;
-
     private String rom;
-
     private String sim;
-
     private Long quantityOfSim;
-
     private String cpu;
-
     private String weight;
-
     private String guarantee;
-
     private String image;
-
     private String displayInch;
-
     private String appointment;
-
     private String capacityBattery;
-
+    private File PDF;
     private String description;
-
     private Long quantityOfProducts;
-
     private int disPercent;
-
     private String categoryName;
     private Boolean inBasket;
 }
