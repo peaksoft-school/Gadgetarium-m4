@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface OrderReviewRepository extends JpaRepository<OrderReview, Long> {
-    @Query("select o from OrderReview o where cast(o.review as string) = :orderReview")
+    @Query("SELECT o FROM OrderReview o WHERE CAST(o.review AS string) = :orderReview")
     Optional<OrderReview> findByOrderReview(@PathParam("orderReview") String orderReview);
 }
