@@ -2,12 +2,14 @@ package us.peaksoft.gadgetarium.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import us.peaksoft.gadgetarium.dto.*;
 import us.peaksoft.gadgetarium.entity.*;
 import us.peaksoft.gadgetarium.exception.NotFoundException;
 import us.peaksoft.gadgetarium.repository.*;
+import us.peaksoft.gadgetarium.security.JwtService;
 import us.peaksoft.gadgetarium.service.ProfileService;
 
 @Service
@@ -17,6 +19,8 @@ public class ProfileServiceImpl implements ProfileService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final JwtService jwtService;
 
     private boolean checkOldPassword(String email, String oldPassword) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User is not found"));
@@ -28,7 +32,8 @@ public class ProfileServiceImpl implements ProfileService {
         return passwordEncoder.encode(password);
     }
 
-    private String getAddressForUser(Long userId) { User user = userRepository.findById(userId).orElse(null);
+    private String getAddressForUser(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
         String result;
         assert user != null;
         Address address = user.getAddress();
@@ -42,9 +47,12 @@ public class ProfileServiceImpl implements ProfileService {
         return result;
     }
 
-    public SimpleResponse updateProfile(ProfileRequest profileRequest,Long id) {
+    public SimpleResponse updateProfile(String header,ProfileRequest profileRequest) {
         SimpleResponse update = new SimpleResponse();
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
+        String token = getTokenFromAuthorizationHeader(header);
+        User user = getUserFromToken(token);
+        Long user_id = user.getId();
+        UserDetails userDetails = userRepository.getReferenceById(user_id);
         Address address = user.getAddress();
         String[] words = profileRequest.getAddress().split(" ");
         String country = words[0];
@@ -72,9 +80,18 @@ public class ProfileServiceImpl implements ProfileService {
         return update;
     }
 
-    public SimpleResponse changePassword (ProfileChangePasswordRequest passwordRequest, Long id) {
+    public SimpleResponse changePassword (String authorizationHeader,ProfileChangePasswordRequest passwordRequest) {
         SimpleResponse changed = new SimpleResponse();
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
+        String token = getTokenFromAuthorizationHeader(authorizationHeader);
+        User user = getUserFromToken(token);
+        Long user_id = user.getId();
+        UserDetails userDetails = userRepository.getReferenceById(user_id);
+        if(!(jwtService.isTokenValid(token, userDetails)))
+        {
+            changed.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            changed.setMessage("Token is not valid");
+            return changed;
+        }
         if (!passwordRequest.getNewPassword().equals(passwordRequest.getConfirmPassword())) {
             changed.setHttpStatus(HttpStatus.BAD_REQUEST);
             changed.setMessage("New password & Confirmation password do not match.");
@@ -93,8 +110,15 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ResponseEntity<?> getProfile(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
+    public ResponseEntity<?> getProfile(String header) {
+        String token = getTokenFromAuthorizationHeader(header);
+        User user = getUserFromToken(token);
+        Long user_id = user.getId();
+        UserDetails userDetails = userRepository.getReferenceById(user_id);
+        if(!jwtService.isTokenValid(token, userDetails))
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("token ");
+        }
         ProfileResponse profileResponse = new ProfileResponse();
         profileResponse.setFirstName(user.getFirstName());
         profileResponse.setLastName(user.getLastName());
@@ -102,5 +126,19 @@ public class ProfileServiceImpl implements ProfileService {
         profileResponse.setAddress(getAddressForUser(user.getId()));
         profileResponse.setPhoneNumber(user.getPhoneNumber());
         return ResponseEntity.status(HttpStatus.OK).body(profileResponse);
+    }
+
+    private User getUserFromToken(String token) {
+        String email = jwtService.extractUsername(token);
+        return userRepository.findByEmail(email).
+                orElseThrow(() -> new NotFoundException("User is not found"));
+
+    }
+
+    private String getTokenFromAuthorizationHeader(String authorizationHeader) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Invalid authorization header");
+        }
+        return authorizationHeader.substring(7);
     }
 }

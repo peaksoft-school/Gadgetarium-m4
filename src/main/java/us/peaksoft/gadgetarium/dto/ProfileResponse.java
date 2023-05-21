@@ -1,6 +1,7 @@
 package us.peaksoft.gadgetarium.dto;
 
 import lombok.*;
+
 @Getter
 @Setter
 @Builder
@@ -8,9 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 public class ProfileResponse {
 
-    private String FirstName;
-    private String LastName;
-    private String Email;
-    private String Address;
-    private String PhoneNumber;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String address;
+    private String phoneNumber;
 }
