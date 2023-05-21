@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import us.peaksoft.gadgetarium.entity.Category;
-import us.peaksoft.gadgetarium.entity.Discount;
 import us.peaksoft.gadgetarium.enums.Brand;
 import us.peaksoft.gadgetarium.enums.Color;
 import us.peaksoft.gadgetarium.enums.OS;
 
-import java.util.List;
+import java.io.File;
 
 @Getter
 @Setter
@@ -36,7 +34,7 @@ public class ProductResponse {
     private String displayInch;
     private String appointment;
     private String capacityBattery;
-    private String PDF;
+    private File PDF;
     private String description;
     private Long quantityOfProducts;
     private int disPercent;

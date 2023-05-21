@@ -17,6 +17,9 @@ import us.peaksoft.gadgetarium.repository.DiscountRepository;
 import us.peaksoft.gadgetarium.repository.ProductRepository;
 import us.peaksoft.gadgetarium.service.ProductService;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +52,34 @@ public class ProductServiceImpl implements ProductService {
             productsList.add(mapToResponseForDescriptionAndSavingPrice(product));
         }
         return productsList;
+    }
+
+    @Override
+    public File file(Long id) throws IOException {
+        File file =new File("Info.pdf");
+        FileWriter writer = new FileWriter("Info.pdf");
+
+        Product product = productRepository.findById(id).get();
+        writer.write("Product name: " + product.getName() + "\n");
+        writer.write("Product brand: " + product.getBrand() + "\n");
+        writer.write("Product color: " + product.getColor() +"\n");
+        writer.write("Product price: " + product.getPrice() +"\n" );
+        writer.write("Date of issue: " + product.getDateOfIssue() +"\n" );
+        writer.write("Product os: " + product.getOs() +"\n" );
+        writer.write("Product ram: " + product.getRam() +"\n" );
+        writer.write("Product sim: " + product.getSim() +"\n" );
+        writer.write("Product rom: " + product.getRom() + "\n");
+        writer.write("Product cpu: " + product.getCpu() + "\n");
+        writer.write("Product appointment: " + product.getAppointment() +"\n");
+        writer.write("Product capacity battery: " + product.getCapacityBattery() +"\n");
+        writer.write("Product guarantee: " + product.getGuarantee() +"\n");
+        writer.write("Product description: " + product.getDisplayInch() +"\n");
+        writer.write("Product image: " + product.getImage() +"\n");
+        writer.write("Product quantity of similar: " + product.getQuantityOfSim() +"\n");
+        writer.write("Product weight: " + product.getWeight() +"\n");
+        writer.write("Product category: " + product.getCategory() +"\n");
+        writer.close();
+        return file;
     }
 
     @Override
