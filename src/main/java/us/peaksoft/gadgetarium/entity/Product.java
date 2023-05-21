@@ -61,7 +61,6 @@ public class Product {
     private String appointment;
 
     private String description;
-    private Long quantityOfProducts;
 
     private Long quantityOfProducts;
 
