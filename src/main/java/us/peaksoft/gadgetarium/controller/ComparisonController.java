@@ -11,7 +11,7 @@ import us.peaksoft.gadgetarium.enums.Subcat;
 import us.peaksoft.gadgetarium.service.ComparisonService;
 
 @RestController
-@RequestMapping("api/public/compare")
+@RequestMapping("api/compare")
 @Tag(name = "CompareController", description = "API endpoints for comparison products")
 @RequiredArgsConstructor
 public class ComparisonController {

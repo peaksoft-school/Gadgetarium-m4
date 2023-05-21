@@ -15,7 +15,6 @@ import us.peaksoft.gadgetarium.service.ComparisonService;
 
 @Service
 @RequiredArgsConstructor
-
 public class ComparisonServiceImpl implements ComparisonService {
 
     private final CategoryRepository categoryRepository;
