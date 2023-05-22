@@ -104,10 +104,6 @@ public class Product {
     @JoinColumn(name = "discount_id")
     private Discount discount;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private Order order;
-
     @Transient
     private Long discountId;
 
