@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/profile/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/public/register")
                 .permitAll()
