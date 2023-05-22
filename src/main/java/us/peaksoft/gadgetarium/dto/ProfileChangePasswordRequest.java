@@ -10,6 +10,6 @@ import lombok.*;
 public class ProfileChangePasswordRequest {
 
     private String oldPassword;
-    private String NewPassword;
-    private String ConfirmPassword;
+    private String newPassword;
+    private String confirmPassword;
 }
