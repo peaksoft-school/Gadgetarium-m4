@@ -66,8 +66,8 @@ public class ProfileServiceImpl implements ProfileService {
         updatedAddress.setCityName(city);
         updatedAddress.setStreetName(street);
         updatedAddress.setPostalCode(index);
-        updatedAddress.setId(user.getId());
-        updatedAddress.setUser(user);
+     //   updatedAddress.setId(user.getId());
+     //   updatedAddress.setUser(user);
         addressRepository.save(updatedAddress);
         user.setAddress(updatedAddress);
         user.setFirstName(profileRequest.getFirstName());
