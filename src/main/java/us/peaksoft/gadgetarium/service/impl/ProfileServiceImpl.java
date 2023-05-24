@@ -17,9 +17,7 @@ import us.peaksoft.gadgetarium.service.ProfileService;
 public class ProfileServiceImpl implements ProfileService {
 
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final JwtService jwtService;
 
     private boolean checkOldPassword(String email, String oldPassword) {
@@ -66,9 +64,6 @@ public class ProfileServiceImpl implements ProfileService {
         updatedAddress.setCityName(city);
         updatedAddress.setStreetName(street);
         updatedAddress.setPostalCode(index);
-        updatedAddress.setId(user.getId());
-        updatedAddress.setUser(user);
-        addressRepository.save(updatedAddress);
         user.setAddress(updatedAddress);
         user.setFirstName(profileRequest.getFirstName());
         user.setLastName(profileRequest.getLastName());

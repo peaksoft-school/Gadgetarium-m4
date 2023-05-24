@@ -65,9 +65,10 @@ public class User implements UserDetails {
     @JoinColumn(name = "order_list_id")
     private OrderList orderList;
 
-    @OneToOne
-    @JoinColumn(name = "address_id")
+    @Embedded
+    @Column(insertable=false, updatable=false)
     private Address address;
+
     @OneToOne
     @JoinColumn(name = "payments_id")
     private Payments payments;
