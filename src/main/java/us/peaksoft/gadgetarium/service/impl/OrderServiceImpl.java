@@ -46,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
         } else if (order.getShipping() == Shipping.FROM_SHOP) {
             order.setUser(user);
         }
+        order.setCountOfProducts((short) basket.getQuantityOfProducts());
         orderRepository.save(order);
         basketRepository.save(basket);
         return mapToResponseVarietyOfDelivery(order);
