@@ -106,16 +106,9 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         productRepository.save(product);
-        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
+        product.setQuantityOfProducts(setQuantityOfProducts(product));
         productRepository.save(product);
-        for(Product product1 : productRepository.findAll()){
-            product1.setQuantityOfProducts(productRepository.Quantity(product1.getBrand(),
-                    product1.getColor(), product1.getRam(),
-                    product1.getQuantityOfSim(), product1.getPrice()));
-            productRepository.save(product1);
-        }
+        saveQuantityOfProducts();
         return mapToResponseForDescriptionAndSavingPrice(product);
 
     }
@@ -167,18 +160,9 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         productRepository.save(product);
-        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
-        product.setPDF(productRequest.getPDF());
-        product.setDescription(productRequest.getDescription());
+        product.setQuantityOfProducts(setQuantityOfProducts(product));
         productRepository.save(product);
-        for(Product product1 : productRepository.findAll()){
-            product1.setQuantityOfProducts(productRepository.Quantity(product1.getBrand(),
-                    product1.getColor(), product1.getRam(),
-                    product1.getQuantityOfSim(), product1.getPrice()));
-            productRepository.save(product1);
-        }
+        saveQuantityOfProducts();
         return mapToResponseForDescriptionAndSavingPrice(product);
     }
 
@@ -204,12 +188,7 @@ public class ProductServiceImpl implements ProductService {
             productDeleteResponse.setHttpStatus(HttpStatus.NOT_FOUND);
             productDeleteResponse.setMessage("the product's id is " + product.getId());
         }
-        for(Product product1 : productRepository.findAll()){
-            product1.setQuantityOfProducts(productRepository.Quantity(product1.getBrand(),
-                    product1.getColor(), product1.getRam(),
-                    product1.getQuantityOfSim(), product1.getPrice()));
-            productRepository.save(product1);
-        }
+        saveQuantityOfProducts();
         return productDeleteResponse;
     }
 
@@ -342,5 +321,22 @@ public class ProductServiceImpl implements ProductService {
         productDetailsResponse.setPrice(product.getPrice());
         productDetailsResponse.setQuantityOfProducts(product.getQuantityOfProducts());
         return productDetailsResponse;
+    }
+
+    private void saveQuantityOfProducts(){
+        for(Product product1 : productRepository.findAll()){
+            product1.setQuantityOfProducts(productRepository.Quantity(product1.getBrand(),
+                    product1.getColor(), product1.getRam(),
+                    product1.getQuantityOfSim(), product1.getPrice()));
+            productRepository.save(product1);
+        }
+    }
+
+    private Long setQuantityOfProducts(Product product){
+         product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
+                product.getColor(), product.getRam(),
+                product.getQuantityOfSim(), product.getPrice()));
+         Long quantityByFields = product.getQuantityOfProducts();
+        return quantityByFields;
     }
 }
