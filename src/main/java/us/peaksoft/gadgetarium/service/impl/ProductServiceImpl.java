@@ -105,10 +105,10 @@ public class ProductServiceImpl implements ProductService {
                 product.setDisPercent(product.getDiscount().getPercent());
             }
         }
-        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
         productRepository.save(product);
+        product.setQuantityOfProducts(setQuantityOfProducts(product));
+        productRepository.save(product);
+        saveQuantityOfProducts();
         return mapToResponseForDescriptionAndSavingPrice(product);
 
     }
@@ -159,12 +159,10 @@ public class ProductServiceImpl implements ProductService {
                 product.setDisPercent(product.getDiscount().getPercent());
             }
         }
-        product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
-                product.getColor(), product.getRam(),
-                product.getQuantityOfSim(), product.getPrice()));
-        product.setPDF(productRequest.getPDF());
-        product.setDescription(productRequest.getDescription());
         productRepository.save(product);
+        product.setQuantityOfProducts(setQuantityOfProducts(product));
+        productRepository.save(product);
+        saveQuantityOfProducts();
         return mapToResponseForDescriptionAndSavingPrice(product);
     }
 
@@ -190,6 +188,7 @@ public class ProductServiceImpl implements ProductService {
             productDeleteResponse.setHttpStatus(HttpStatus.NOT_FOUND);
             productDeleteResponse.setMessage("the product's id is " + product.getId());
         }
+        saveQuantityOfProducts();
         return productDeleteResponse;
     }
 
@@ -322,5 +321,22 @@ public class ProductServiceImpl implements ProductService {
         productDetailsResponse.setPrice(product.getPrice());
         productDetailsResponse.setQuantityOfProducts(product.getQuantityOfProducts());
         return productDetailsResponse;
+    }
+
+    private void saveQuantityOfProducts(){
+        for(Product product1 : productRepository.findAll()){
+            product1.setQuantityOfProducts(productRepository.Quantity(product1.getBrand(),
+                    product1.getColor(), product1.getRam(),
+                    product1.getQuantityOfSim(), product1.getPrice()));
+            productRepository.save(product1);
+        }
+    }
+
+    private Long setQuantityOfProducts(Product product){
+         product.setQuantityOfProducts(productRepository.Quantity(product.getBrand(),
+                product.getColor(), product.getRam(),
+                product.getQuantityOfSim(), product.getPrice()));
+         Long quantityByFields = product.getQuantityOfProducts();
+        return quantityByFields;
     }
 }
