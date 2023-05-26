@@ -20,6 +20,7 @@ import us.peaksoft.gadgetarium.enums.Subcat;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest(properties ={"spring.datasource.password=aidai2004",
         "spring.datasource.url=jdbc:postgresql://localhost:5432/postgres",
         "spring.datasource.username=postgres",
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ProductRepositoryTest {
+
     @Autowired
     ProductRepository productRepository;
 
