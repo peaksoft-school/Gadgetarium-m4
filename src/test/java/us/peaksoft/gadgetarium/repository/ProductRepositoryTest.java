@@ -131,8 +131,8 @@ class ProductRepositoryTest {
 
     @Test
     void itShouldCountQuantity() {
-        Long quantity = productRepository.Quantity(Brand.APPLE,Color.BLACK,"2gb",2l,25000);
-        assertEquals(0,quantity);
+        Long quantity = productRepository.Quantity(Brand.APPLE,Color.BLACK,"3gb",2l,25000);
+        assertEquals(1,quantity);
     }
 
     @Test
