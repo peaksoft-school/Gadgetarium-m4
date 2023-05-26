@@ -18,7 +18,6 @@ import us.peaksoft.gadgetarium.enums.OS;
 import us.peaksoft.gadgetarium.enums.Subcat;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(properties ={"spring.datasource.password=aidai2004",
