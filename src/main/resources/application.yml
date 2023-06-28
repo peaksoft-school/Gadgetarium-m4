@@ -1,25 +1,37 @@
 spring:
-    datasource:
-        password: postgres
-        url: jdbc:postgresql://localhost:5432/gadgetarium
-        username: postgres
-    jpa:
-        database-platform: org.hibernate.dialect.PostgreSQL9Dialect
-        defer-datasource-initialization: true
-        hibernate:
-            ddl-auto: create
-    sql:
-        init:
-            data-locations: classpath:db/data.sql
-            mode: always
+  datasource:
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/gadgetarium
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    defer-datasource-initialization: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      data-locations: classpath:db/data.sql
+      mode: always
+  flyway:
+    baseline-description: "init"
+    baseline-version: 1
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    locations: classpath:db/db.migration
 application:
-        bucket:
-            name:  gadgetarium-m4
+  bucket:
+    name: gadgetarium-m4
 cloud:
-    aws:
-        credentials:
-           access-key: ${cloud.aws.credentials.access-key}
-           secret-key: ${cloud.aws.credentials.secret-key}
+  aws:
+    credentials:
+      access-key: ${cloud.aws.credentials.access-key}
+      secret-key: ${cloud.aws.credentials.secret-key}
 
-        region:
-              static: eu-central-1
+

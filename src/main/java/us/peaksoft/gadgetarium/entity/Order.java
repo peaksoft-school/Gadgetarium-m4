@@ -1,10 +1,7 @@
 package us.peaksoft.gadgetarium.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import us.peaksoft.gadgetarium.enums.OrderStatus;
 
 import java.util.List;
@@ -14,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Data
 @Table(name = "orders")
 public class Order {
     @Id
