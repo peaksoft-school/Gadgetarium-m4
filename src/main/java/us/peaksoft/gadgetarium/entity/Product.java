@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.List;
 
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
 @ToString
 @Getter
