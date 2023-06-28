@@ -1,31 +1,17 @@
 package us.peaksoft.gadgetarium.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import us.peaksoft.gadgetarium.enums.OrderStatus;
-import us.peaksoft.gadgetarium.enums.PaymentType;
-import us.peaksoft.gadgetarium.enums.Shipping;
 
+import java.util.List;
 
+@Getter
 @Setter
 @NoArgsConstructor
-@Getter
 @AllArgsConstructor
 @Entity
+@Data
 @Table(name = "orders")
 public class Order {
     @Id
@@ -38,11 +24,16 @@ public class Order {
     @Column(name = "total_sum")
     private int totalSum;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentType typePayment;
+    private String shipping;
+
+    @Column(name = "type_payment")
+    private String typePayment;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private List<Product> products;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -50,15 +41,4 @@ public class Order {
 
     @ManyToOne
     private DeliveryMen deliveryMan;
-
-    @ManyToOne
-    @JoinColumn(name = "order_review_status")
-    private OrderReview orderReview;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "basket_id")
-    private Basket basket;
-
-    @Enumerated(EnumType.STRING)
-    private Shipping shipping;
 }

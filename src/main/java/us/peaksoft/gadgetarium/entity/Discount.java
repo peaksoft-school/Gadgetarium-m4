@@ -2,16 +2,14 @@ package us.peaksoft.gadgetarium.entity;
 
 import jakarta.persistence.*;
 import jdk.jfr.SettingDefinition;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
