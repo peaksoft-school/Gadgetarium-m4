@@ -2,12 +2,23 @@ spring:
     datasource:
         password: postgres
         url: jdbc:postgresql://localhost:5432/gadgetarium
+        driver-class-name: org.postgresql.Driver
         username: postgres
+    flyway:
+        baseline-description: "init"
+        baseline-on-migrate: true
+        baseline-version: 1
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQL9Dialect
         defer-datasource-initialization: true
         hibernate:
             ddl-auto: create
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
+            database: postgresql
+            database-platform: org.hibernate.dialect.PostgreSQLDialect
     sql:
         init:
             data-locations: classpath:db/data.sql
